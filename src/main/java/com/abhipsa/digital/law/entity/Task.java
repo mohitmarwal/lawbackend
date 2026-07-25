@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 
 @Entity
@@ -23,6 +24,7 @@ public class Task {
     private String status;
 
     private LocalDate dueDate;
+    private LocalTime endTime;
 
     @ManyToOne
     @JoinColumn(name = "case_id")
@@ -31,4 +33,8 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "assigned_to")
     private User assignedTo;
+
+    @ManyToOne
+    @JoinColumn(name = "assigned_by")
+    private User assignedBy;
 }

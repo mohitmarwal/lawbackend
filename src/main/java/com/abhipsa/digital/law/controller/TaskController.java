@@ -1,6 +1,7 @@
 package com.abhipsa.digital.law.controller;
 
 import com.abhipsa.digital.law.entity.Task;
+import com.abhipsa.digital.law.entity.User;
 import com.abhipsa.digital.law.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -45,6 +46,16 @@ public class TaskController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable String id) {
         service.delete(id);
+    }
+
+    @PostMapping("/{id}/reassign/{userId}")
+    public Task reassign(
+            @PathVariable String id,
+            @PathVariable String userId) {
+
+        User newAssignee = new User();
+        newAssignee.setId(userId);
+        return service.reassign(id, newAssignee);
     }
 
     @GetMapping("/status/{status}")

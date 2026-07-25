@@ -1,6 +1,8 @@
 package com.abhipsa.digital.law.service;
 
 import com.abhipsa.digital.law.entity.Bill;
+import com.abhipsa.digital.law.entity.BillLineItem;
+import com.abhipsa.digital.law.repository.BillLineItemRepository;
 import com.abhipsa.digital.law.repository.BillRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -15,6 +17,7 @@ import java.util.List;
 public class BillService {
 
     private final BillRepository repository;
+    private final BillLineItemRepository lineItemRepository;
 
     public Bill create(Bill bill) {
         return repository.save(bill);
@@ -39,12 +42,47 @@ public class BillService {
         existing.setReceived(bill.getReceived());
         existing.setBalance(bill.getBalance());
         existing.setCaseDetails(bill.getCaseDetails());
+        existing.setPreviousBillNo(bill.getPreviousBillNo());
+        existing.setTermsAndConditions(bill.getTermsAndConditions());
 
         return repository.save(existing);
     }
 
     public void delete(String id) {
         repository.deleteById(id);
+    }
+
+    public Bill addLineItem(String billId, BillLineItem item) {
+        Bill bill = getById(billId);
+        item.setBill(bill);
+        item.calculate();
+        lineItemRepository.save(item);
+        return calculateTotal(billId);
+    }
+
+    public Bill removeLineItem(String billId, String itemId) {
+        lineItemRepository.deleteById(itemId);
+        return calculateTotal(billId);
+    }
+
+    // Only re-derives total when the bill actually has line items, so a
+    // plain flat-total bill (as lawreact creates today) is left untouched.
+    public Bill calculateTotal(String billId) {
+        Bill bill = getById(billId);
+        List<BillLineItem> items = lineItemRepository.findByBillId(billId);
+
+        if (!items.isEmpty()) {
+            double sum = 0;
+            for (BillLineItem item : items) {
+                item.calculate();
+                sum += item.getAmount() != null ? item.getAmount() : 0;
+            }
+            bill.setTotal(sum);
+            bill.setBalance(sum - bill.getReceived());
+            repository.save(bill);
+        }
+
+        return bill;
     }
 
     public Bill findByBillNo(String billNo) {

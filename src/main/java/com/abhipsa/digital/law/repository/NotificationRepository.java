@@ -25,6 +25,16 @@ public interface NotificationRepository extends JpaRepository<Notification, Stri
 
     List<Notification> findByCaseDetailsId(String caseId);
 
+    // Scopes the notifications list to whichever associate/senior associate
+    // the linked case is assigned to (non-admin visibility).
+    List<Notification> findByCaseDetails_AssignedUser_Id(String userId);
+
+    Page<Notification> findByCaseDetails_AssignedUser_Id(String userId, Pageable pageable);
+
+    List<Notification> findByStatusContainingIgnoreCaseAndCaseDetails_AssignedUser_Id(String status, String userId);
+
+    Page<Notification> findByStatusContainingIgnoreCaseAndCaseDetails_AssignedUser_Id(String status, String userId, Pageable pageable);
+
     List<Notification> findByMessageContainingIgnoreCase(String message);
 
     List<Notification> findBySentAt(LocalDateTime sentAt);

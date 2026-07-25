@@ -1,10 +1,14 @@
 package com.abhipsa.digital.law.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -12,17 +16,48 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.List;
 
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig {
 
-    @Bean
+    private final JwtAuthFilter jwtAuthFilter;
 
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
                 .cors(cors -> {})
                 .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth ->
-                        auth.anyRequest().permitAll());
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/auth/**").permitAll()
+                        // Kubernetes/Docker liveness & readiness probes.
+                        .requestMatchers("/actuator/health/**").permitAll()
+                        // Finance and the Admin-only tools (Checker approval,
+                        // Mobile Contacts). Associates/senior associates only
+                        // get "main work" + change password, per FR request.
+                        .requestMatchers("/api/bills/**").hasRole("ADMIN")
+                        .requestMatchers("/api/mobile-contacts/**").hasRole("ADMIN")
+                        .requestMatchers("/api/cases/checker/**").hasRole("ADMIN")
+                        // Only an admin can create new personnel accounts;
+                        // GET (dropdowns, self-lookup) stays open to everyone.
+                        .requestMatchers(HttpMethod.POST, "/api/users").hasRole("ADMIN")
+                        .anyRequest().authenticated())
+                .exceptionHandling(ex -> ex
+                        // Missing/expired/invalid token: the frontend specifically
+                        // watches for 401 to clear the stale token and redirect to
+                        // login (Spring's default entry point returns 403 instead).
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.setStatus(org.springframework.http.HttpStatus.UNAUTHORIZED.value());
+                            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                            response.getWriter().write("{\"error\":\"Session expired or not authenticated. Please log in again.\"}");
+                        })
+                        // Valid session, but the role doesn't allow this endpoint.
+                        .accessDeniedHandler((request, response, accessDeniedException) -> {
+                            response.setStatus(org.springframework.http.HttpStatus.FORBIDDEN.value());
+                            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                            response.getWriter().write("{\"error\":\"You do not have permission to access this.\"}");
+                        }))
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -50,41 +85,3 @@ public class SecurityConfig {
         return source;
     }
 }
-
-
-//package com.abhipsa.digital.law.config;
-//
-//import org.springframework.context.annotation.bean;
-//import org.springframework.context.annotation.configuration;
-//import org.springframework.security.config.annotation.web.builders.httpsecurity;
-//import org.springframework.security.config.http.sessioncreationpolicy;
-//import org.springframework.security.web.securityfilterchain;
-//
-//@configuration
-//public class securityconfig {
-//
-//    @bean
-//    public securityfilterchain securityfilterchain(httpsecurity http) throws exception {
-//        http
-//                .csrf(csrf -> csrf.disable())
-//
-//                .authorizehttprequests(auth -> auth
-//                        // change from "/api/auth/**" to "/auth/**" to match your actual url
-//                        .requestmatchers("/auth/**").permitall()
-//
-//                        // keep your other role protections intact
-//                        .requestmatchers("/users/**").hasrole("admin")
-//                        .requestmatchers("/master-data/**").hasrole("admin")
-//                        .requestmatchers("/bills/**").hasanyrole("admin", "lawyer")
-//                        .requestmatchers("/cases/**", "/tasks/**").hasanyrole("admin", "lawyer", "associate")
-//
-//                        .anyrequest().authenticated()
-//                )
-//
-//                .sessionmanagement(session -> session
-//                        .sessioncreationpolicy(sessioncreationpolicy.stateless)
-//                );
-//
-//        return http.build();
-//    }
-//}

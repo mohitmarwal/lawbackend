@@ -44,6 +44,10 @@ public interface TaskRepository extends JpaRepository<Task, String> {
             String status,
             String userId);
 
+    List<Task> findByPriorityContainingIgnoreCaseAndAssignedToId(String priority, String userId);
+
+    List<Task> findByTypeContainingIgnoreCaseAndAssignedToId(String type, String userId);
+
     List<Task> findByPriorityAndStatus(
             String priority,
             String status);
@@ -71,6 +75,12 @@ public interface TaskRepository extends JpaRepository<Task, String> {
     Page<Task> findByTypeContainingIgnoreCase(String type, Pageable pageable);
 
     Page<Task> findByAssignedToId(String userId, Pageable pageable);
+
+    Page<Task> findByStatusAndAssignedToId(String status, String userId, Pageable pageable);
+
+    Page<Task> findByPriorityContainingIgnoreCaseAndAssignedToId(String priority, String userId, Pageable pageable);
+
+    Page<Task> findByTypeContainingIgnoreCaseAndAssignedToId(String type, String userId, Pageable pageable);
 
     Page<Task> findByCaseDetailsId(String caseId, Pageable pageable);
 

@@ -58,6 +58,21 @@ public class CaseDetailsController {
         }
     }
 
+    @GetMapping("/daily-board/paged")
+    public Page<Map<String, Object>> getDailyBoardPaged(
+            @RequestParam(value = "date", required = false) String date,
+            @PageableDefault(size = 20) Pageable pageable) {
+
+        if (date == null) return Page.empty(pageable);
+        try {
+            LocalDate localDate = LocalDate.parse(date);
+            return service.getDailyBoardDataPaged(localDate, pageable);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Page.empty(pageable);
+        }
+    }
+
     @PostMapping("/checker/approve/{id}")
     public ResponseEntity<?> approveEntry(@PathVariable String id) {
         try {

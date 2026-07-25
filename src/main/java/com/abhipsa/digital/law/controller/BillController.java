@@ -1,6 +1,7 @@
 package com.abhipsa.digital.law.controller;
 
 import com.abhipsa.digital.law.entity.Bill;
+import com.abhipsa.digital.law.entity.BillLineItem;
 import com.abhipsa.digital.law.service.BillService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -45,6 +46,27 @@ public class BillController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable String id) {
         service.delete(id);
+    }
+
+    @PostMapping("/{id}/line-items")
+    public Bill addLineItem(
+            @PathVariable String id,
+            @RequestBody BillLineItem item) {
+
+        return service.addLineItem(id, item);
+    }
+
+    @DeleteMapping("/{id}/line-items/{itemId}")
+    public Bill removeLineItem(
+            @PathVariable String id,
+            @PathVariable String itemId) {
+
+        return service.removeLineItem(id, itemId);
+    }
+
+    @PostMapping("/{id}/calculate-total")
+    public Bill calculateTotal(@PathVariable String id) {
+        return service.calculateTotal(id);
     }
 
     @GetMapping("/bill-no/{billNo}")

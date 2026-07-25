@@ -1,6 +1,7 @@
 package com.abhipsa.digital.law.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import lombok.Getter;
@@ -31,6 +32,12 @@ public class CaseDetails {
     private LocalDate filingDate;
     private LocalDate nextDate;
 
+    // Not persisted on this entity: the date the case's nextDate held
+    // immediately before the most recent update, sourced from HearingDate
+    // history and populated by CaseDetailsService at read time.
+    @Transient
+    private LocalDate previousDate;
+
     // ADD THESE
 
     private String caseType;
@@ -39,8 +46,24 @@ public class CaseDetails {
 
     private LocalDate limitationDate;
 
+    // Not persisted directly: hydrated from plaintiffClient/defendantClient on
+    // load (see hydratePartyNames), and resolved back into a Client relation
+    // by the service on create/update. Keeps the plaintiff/defendant API
+    // (JSON in and out) as plain strings while the schema stores a real FK.
+    @Transient
     private String plaintiff;
+    @Transient
     private String defendant;
+
+    @ManyToOne
+    @JoinColumn(name = "plaintiff_client_id")
+    @JsonIgnore
+    private Client plaintiffClient;
+
+    @ManyToOne
+    @JoinColumn(name = "defendant_client_id")
+    @JsonIgnore
+    private Client defendantClient;
 
     private String description;
     private String status;
@@ -59,4 +82,14 @@ public class CaseDetails {
     @ManyToOne
     @JoinColumn(name = "assigned_user_id")
     private User assignedUser;
+
+    @PostLoad
+    private void hydratePartyNames() {
+        if (plaintiffClient != null) {
+            plaintiff = plaintiffClient.getName();
+        }
+        if (defendantClient != null) {
+            defendant = defendantClient.getName();
+        }
+    }
 }

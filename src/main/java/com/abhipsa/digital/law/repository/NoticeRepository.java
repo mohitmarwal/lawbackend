@@ -23,6 +23,14 @@ public interface NoticeRepository extends JpaRepository<Notice, String> {
 
     List<Notice> findByCaseDetailsId(String caseId);
 
+    List<Notice> findByCaseDetailsIdIn(List<String> caseIds);
+
+    // Scopes the notices list to whichever associate/senior associate the
+    // linked case is assigned to (non-admin visibility).
+    List<Notice> findByCaseDetails_AssignedUser_Id(String userId);
+
+    Page<Notice> findByCaseDetails_AssignedUser_Id(String userId, Pageable pageable);
+
     List<Notice> findByNoticeDate(LocalDate noticeDate);
 
     List<Notice> findByDispatchDate(LocalDate dispatchDate);

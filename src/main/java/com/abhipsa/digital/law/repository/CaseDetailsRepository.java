@@ -22,9 +22,11 @@ public interface CaseDetailsRepository extends JpaRepository<CaseDetails, String
 
     List<CaseDetails> findByStatus(String status);
 
-    List<CaseDetails> findByPlaintiffContainingIgnoreCase(String plaintiff);
+    List<CaseDetails> findByPlaintiffClientIdOrDefendantClientId(String plaintiffClientId, String defendantClientId);
 
-    List<CaseDetails> findByDefendantContainingIgnoreCase(String defendant);
+    List<CaseDetails> findByPlaintiffClient_NameContainingIgnoreCase(String plaintiff);
+
+    List<CaseDetails> findByDefendantClient_NameContainingIgnoreCase(String defendant);
 
     List<CaseDetails> findByDescriptionContainingIgnoreCase(String description);
 
@@ -58,6 +60,16 @@ public interface CaseDetailsRepository extends JpaRepository<CaseDetails, String
             String status,
             String userId);
 
+    List<CaseDetails> findByCourtIdAndAssignedUserId(String courtId, String userId);
+
+    List<CaseDetails> findByPlaintiffClient_NameContainingIgnoreCaseAndAssignedUserId(String plaintiff, String userId);
+
+    List<CaseDetails> findByDefendantClient_NameContainingIgnoreCaseAndAssignedUserId(String defendant, String userId);
+
+    List<CaseDetails> findByNextDateBetweenAndAssignedUserId(LocalDate startDate, LocalDate endDate, String userId);
+
+    List<CaseDetails> findByFilingDateBetweenAndAssignedUserId(LocalDate startDate, LocalDate endDate, String userId);
+
 
     long countByCaseTypeIgnoreCase(String caseType);
 
@@ -84,18 +96,21 @@ public interface CaseDetailsRepository extends JpaRepository<CaseDetails, String
     boolean existsByOfficeFileNumber(String officeFileNumber);
 
     @Query(value = """
-        SELECT 
-            cd.office_file_number AS fileNo, 
-            cd.case_number AS regNo, 
-            CONCAT(cd.plaintiff, ' vs ', cd.defendant) AS parties, 
-            c.name AS court, 
-            cd.filing_date AS prevDate, 
+        SELECT
+            cd.office_file_number AS fileNo,
+            cd.case_number AS regNo,
+            CONCAT(pc.name, ' vs ', dc.name) AS parties,
+            c.name AS court,
+            cd.filing_date AS prevDate,
             cd.next_date AS nextDate
         FROM case_details cd
         LEFT JOIN court c ON cd.court_id = c.id
+        LEFT JOIN client pc ON cd.plaintiff_client_id = pc.id
+        LEFT JOIN client dc ON cd.defendant_client_id = dc.id
         WHERE DATE(cd.next_date) = :targetDate
+          AND (:userId IS NULL OR cd.assigned_user_id = :userId)
         """, nativeQuery = true)
-    List<Map<String, Object>> findDailyBoardData(@Param("targetDate") LocalDate targetDate);
+    List<Map<String, Object>> findDailyBoardData(@Param("targetDate") LocalDate targetDate, @Param("userId") String userId);
 
     // ==================================================================
     // ---- Pagination support (added; existing methods above unchanged) ----
@@ -109,11 +124,23 @@ public interface CaseDetailsRepository extends JpaRepository<CaseDetails, String
 
     Page<CaseDetails> findByAssignedUserId(String userId, Pageable pageable);
 
-    Page<CaseDetails> findByPlaintiffContainingIgnoreCase(String plaintiff, Pageable pageable);
+    Page<CaseDetails> findByPlaintiffClient_NameContainingIgnoreCase(String plaintiff, Pageable pageable);
 
-    Page<CaseDetails> findByDefendantContainingIgnoreCase(String defendant, Pageable pageable);
+    Page<CaseDetails> findByDefendantClient_NameContainingIgnoreCase(String defendant, Pageable pageable);
 
     Page<CaseDetails> findByNextDateBetween(LocalDate startDate, LocalDate endDate, Pageable pageable);
 
     Page<CaseDetails> findByFilingDateBetween(LocalDate startDate, LocalDate endDate, Pageable pageable);
+
+    Page<CaseDetails> findByStatusAndAssignedUserId(String status, String userId, Pageable pageable);
+
+    Page<CaseDetails> findByCourtIdAndAssignedUserId(String courtId, String userId, Pageable pageable);
+
+    Page<CaseDetails> findByPlaintiffClient_NameContainingIgnoreCaseAndAssignedUserId(String plaintiff, String userId, Pageable pageable);
+
+    Page<CaseDetails> findByDefendantClient_NameContainingIgnoreCaseAndAssignedUserId(String defendant, String userId, Pageable pageable);
+
+    Page<CaseDetails> findByNextDateBetweenAndAssignedUserId(LocalDate startDate, LocalDate endDate, String userId, Pageable pageable);
+
+    Page<CaseDetails> findByFilingDateBetweenAndAssignedUserId(LocalDate startDate, LocalDate endDate, String userId, Pageable pageable);
 }

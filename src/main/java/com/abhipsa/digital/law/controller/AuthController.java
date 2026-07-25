@@ -46,7 +46,7 @@ public class AuthController {
                     .body(errorBody);
         }
 
-        String token = jwtService.generateToken(user.getEmail());
+        String token = jwtService.generateToken(user.getEmail(), user.getRole());
 
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("token", token);

@@ -24,6 +24,20 @@ public class NotificationController {
         return service.create(notification);
     }
 
+    // Manual "New Notification" send: dispatches immediately by email/
+    // WhatsApp rather than just logging a row. Case is required so
+    // non-admins can only send against a case assigned to them.
+    @PostMapping("/send")
+    public Notification sendManual(@RequestBody Notification notification) {
+        String caseId = notification.getCaseDetails() != null ? notification.getCaseDetails().getId() : null;
+        return service.sendManual(caseId, notification.getChannel(), notification.getRecipient(), notification.getMessage());
+    }
+
+    @PostMapping("/{id}/resend")
+    public Notification resend(@PathVariable String id) {
+        return service.resend(id);
+    }
+
     @GetMapping
     public List<Notification> getAll() {
         return service.getAll();
@@ -45,6 +59,26 @@ public class NotificationController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable String id) {
         service.delete(id);
+    }
+
+    @PostMapping("/{id}/mark-success")
+    public Notification markSuccess(@PathVariable String id) {
+        return service.markSuccess(id);
+    }
+
+    @PostMapping("/{id}/mark-failed")
+    public Notification markFailed(@PathVariable String id) {
+        return service.markFailed(id);
+    }
+
+    @PostMapping("/{id}/retry")
+    public Notification retry(@PathVariable String id) {
+        return service.retry(id);
+    }
+
+    @GetMapping("/failed")
+    public List<Notification> listFailed() {
+        return service.listFailed();
     }
 
     @GetMapping("/reference/{referenceNo}")

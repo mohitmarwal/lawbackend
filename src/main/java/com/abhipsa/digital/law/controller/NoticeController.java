@@ -1,14 +1,20 @@
 package com.abhipsa.digital.law.controller;
 
 import com.abhipsa.digital.law.entity.Notice;
+import com.abhipsa.digital.law.entity.User;
 import com.abhipsa.digital.law.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -45,6 +51,58 @@ public class NoticeController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable String id) {
         service.delete(id);
+    }
+
+    @PostMapping("/{id}/approve")
+    public Notice approve(
+            @PathVariable String id,
+            @RequestParam(required = false) String approverId) {
+
+        User approvedBy = null;
+        if (approverId != null) {
+            approvedBy = new User();
+            approvedBy.setId(approverId);
+        }
+        return service.approve(id, approvedBy);
+    }
+
+    @PostMapping("/{id}/deliver")
+    public Notice markDelivered(@PathVariable String id) {
+        return service.markDelivered(id);
+    }
+
+    @PostMapping("/{id}/document")
+    public Notice uploadDocument(@PathVariable String id, @RequestParam("file") MultipartFile file) throws IOException {
+        return service.saveDocument(id, file.getOriginalFilename(), file.getContentType(), file.getBytes());
+    }
+
+    @GetMapping("/{id}/document")
+    public ResponseEntity<byte[]> downloadDocument(@PathVariable String id) {
+        Notice notice = service.getById(id);
+        MediaType type = notice.getDocumentContentType() != null
+                ? MediaType.parseMediaType(notice.getDocumentContentType())
+                : MediaType.APPLICATION_OCTET_STREAM;
+        return ResponseEntity.ok()
+                .contentType(type)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + notice.getDocumentName() + "\"")
+                .body(notice.getDocumentData());
+    }
+
+    @PostMapping("/{id}/receipt")
+    public Notice uploadReceipt(@PathVariable String id, @RequestParam("file") MultipartFile file) throws IOException {
+        return service.saveReceipt(id, file.getOriginalFilename(), file.getContentType(), file.getBytes());
+    }
+
+    @GetMapping("/{id}/receipt")
+    public ResponseEntity<byte[]> downloadReceipt(@PathVariable String id) {
+        Notice notice = service.getById(id);
+        MediaType type = notice.getReceiptContentType() != null
+                ? MediaType.parseMediaType(notice.getReceiptContentType())
+                : MediaType.APPLICATION_OCTET_STREAM;
+        return ResponseEntity.ok()
+                .contentType(type)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + notice.getReceiptName() + "\"")
+                .body(notice.getReceiptData());
     }
 
     @GetMapping("/reference/{referenceNo}")

@@ -1,9 +1,9 @@
 package com.abhipsa.digital.law.controller;
 
-import com.abhipsa.digital.law.entity.Approved;
+import com.abhipsa.digital.law.entity.HearingDate;
 import com.abhipsa.digital.law.entity.CaseDetails;
 import com.abhipsa.digital.law.entity.Notice;
-import com.abhipsa.digital.law.service.ApprovedService;
+import com.abhipsa.digital.law.service.HearingDateService;
 import com.abhipsa.digital.law.service.CaseDetailsService;
 import com.abhipsa.digital.law.service.NoticeService;
 import com.abhipsa.digital.law.service.TaskService;
@@ -24,7 +24,7 @@ public class DashboardController {
 
     private final CaseDetailsService caseService;
     private final NoticeService noticeService;
-    private final ApprovedService approvedService;
+    private final HearingDateService hearingDateService;
     private final TaskService taskService;
     private String caseType;
     private LocalDate limitationDate;
@@ -34,7 +34,7 @@ public class DashboardController {
 
         List<CaseDetails> cases = caseService.getAll();
         List<Notice> notices = noticeService.getAll();
-        List<Approved> approvals = approvedService.getAll();
+        List<HearingDate> approvals = hearingDateService.getAll();
 
         long disposedCases = cases.stream()
                 .filter(c -> c.getStatus() != null)
@@ -54,8 +54,8 @@ public class DashboardController {
                 .filter(a -> !a.isApproved())
                 .count();
 
-        long noticePendingApprovals = approvals.stream()
-                .filter(a -> !a.isApproved())
+        long noticePendingApprovals = notices.stream()
+                .filter(n -> !n.isApproved())
                 .count();
 
         long pendingTasks = taskService.getAll()

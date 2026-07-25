@@ -19,9 +19,11 @@ public class Notification {
     private String referenceNo;
     private String channel;
     private String message;
+    private String recipient;
 
     private LocalDateTime sentAt;
-    private String status;
+    private String status; // pending | sent | failed
+    private int retryCount = 0;
 
     @ManyToOne
     private CaseDetails caseDetails;

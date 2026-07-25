@@ -25,6 +25,8 @@ public interface BillRepository extends JpaRepository<Bill, String> {
 
     List<Bill> findByCaseDetailsId(String caseId);
 
+    List<Bill> findByCaseDetailsIdIn(List<String> caseIds);
+
     List<Bill> findByTotal(Double total);
 
     List<Bill> findByReceived(Double received);
