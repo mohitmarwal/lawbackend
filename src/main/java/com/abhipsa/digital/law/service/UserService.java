@@ -14,12 +14,23 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository repository;
+    private final CurrentUserService currentUserService;
 
     public User create(User user) {
+        if (currentUserService.isSeniorAssociate()) {
+            // Senior associates may only ever create associate accounts,
+            // regardless of what role the request body asked for.
+            user.setRole("associate");
+        }
         return repository.save(user);
     }
 
     public List<User> getAll() {
+        if (currentUserService.isSeniorAssociate()) {
+            // Senior associates only see associates in personnel dropdowns —
+            // never admins or other senior associates.
+            return repository.findByRoleIgnoreCase("associate");
+        }
         return repository.findAll();
     }
 

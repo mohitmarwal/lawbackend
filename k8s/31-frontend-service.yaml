@@ -1,0 +1,17 @@
+# Public entry point. type: LoadBalancer works out of the box on cloud
+# clusters (EKS/GKE/AKS) and provisions an external IP automatically. On a
+# local cluster without a LoadBalancer implementation (kind/minikube without
+# metallb), switch this to NodePort or use the Ingress in 32-ingress.yaml
+# instead (in which case change this back to ClusterIP).
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: matterly
+spec:
+  type: LoadBalancer
+  selector:
+    app: frontend
+  ports:
+    - port: 80
+      targetPort: 80

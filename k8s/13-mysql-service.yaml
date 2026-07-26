@@ -1,0 +1,16 @@
+# Cluster-internal only — the backend reaches this at "mysql:3306" via
+# Kubernetes DNS. Name must stay "mysql" to match backend-configmap.yaml.
+# type must stay ClusterIP: this DB must never be reachable from outside
+# the cluster (no NodePort/LoadBalancer, no port-forward in deploy scripts).
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  namespace: matterly
+spec:
+  type: ClusterIP
+  selector:
+    app: mysql
+  ports:
+    - port: 3306
+      targetPort: 3306

@@ -1,6 +1,7 @@
 package com.abhipsa.digital.law.config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -13,6 +14,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -20,6 +22,12 @@ import java.util.List;
 public class SecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
+
+    // Comma-separated list, set via CORS_ALLOWED_ORIGINS. Covers local dev
+    // (Vite) and a local minikube port-forward by default; add the real
+    // cluster's domain here (env var, no code change) before that deployment.
+    @Value("${cors.allowed-origins:http://localhost:5173,http://localhost:8081}")
+    private String allowedOriginsProperty;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -38,9 +46,13 @@ public class SecurityConfig {
                         .requestMatchers("/api/bills/**").hasRole("ADMIN")
                         .requestMatchers("/api/mobile-contacts/**").hasRole("ADMIN")
                         .requestMatchers("/api/cases/checker/**").hasRole("ADMIN")
-                        // Only an admin can create new personnel accounts;
+                        // Audit trail — who changed what, admin-only.
+                        .requestMatchers("/api/audit/**").hasRole("ADMIN")
+                        // Admin or senior associate can create new personnel
+                        // accounts (senior associate's role is then forced
+                        // server-side to "associate" — see UserService.create()).
                         // GET (dropdowns, self-lookup) stays open to everyone.
-                        .requestMatchers(HttpMethod.POST, "/api/users").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/users").hasAnyRole("ADMIN", "SENIOR_ASSOCIATE")
                         .anyRequest().authenticated())
                 .exceptionHandling(ex -> ex
                         // Missing/expired/invalid token: the frontend specifically
@@ -68,8 +80,14 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        // Explicitly allow your Vite React Local Server Origin
-        configuration.setAllowedOrigins(List.of("http://localhost:5173"));
+        // Origin allowlist comes from CORS_ALLOWED_ORIGINS (see field above) —
+        // works the same in local dev, a minikube port-forward, Docker
+        // Compose, or a real cluster; only the env var changes, never this code.
+        List<String> allowedOrigins = Arrays.stream(allowedOriginsProperty.split(","))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .toList();
+        configuration.setAllowedOriginPatterns(allowedOrigins);
 
         // Allow typical standard REST Methods
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));

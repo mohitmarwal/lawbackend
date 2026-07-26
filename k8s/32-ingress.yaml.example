@@ -1,0 +1,28 @@
+# Optional — only needed if you're routing through an Ingress controller
+# (nginx-ingress, Traefik, etc.) with a real hostname instead of exposing
+# the frontend Service directly via LoadBalancer/NodePort.
+#
+# If you use this: rename to 32-ingress.yaml, set frontend's Service type
+# back to ClusterIP in 31-frontend-service.yaml, replace matterly.example.com
+# below, and confirm your cluster actually has an ingress controller
+# installed (this manifest alone does nothing without one).
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: matterly-ingress
+  namespace: matterly
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "20m"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: matterly.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 80

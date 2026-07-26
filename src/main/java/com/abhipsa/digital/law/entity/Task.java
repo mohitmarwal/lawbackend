@@ -26,6 +26,9 @@ public class Task {
     private LocalDate dueDate;
     private LocalTime endTime;
 
+    @Column(length = 2000)
+    private String comments;
+
     @ManyToOne
     @JoinColumn(name = "case_id")
     private CaseDetails caseDetails;

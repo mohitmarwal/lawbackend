@@ -1,0 +1,14 @@
+# Cluster-internal only — the frontend's nginx reaches this at
+# "backend:8080" via Kubernetes DNS. Name must stay "backend" to match
+# nginx.conf (same file used for both Docker Compose and this cluster).
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: matterly
+spec:
+  selector:
+    app: backend
+  ports:
+    - port: 8080
+      targetPort: 8080

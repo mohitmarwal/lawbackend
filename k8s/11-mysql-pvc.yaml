@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pvc
+  namespace: matterly
+spec:
+  accessModes:
+    - ReadWriteOnce
+  # No storageClassName set — uses the cluster's default StorageClass so
+  # this works unmodified on most managed clusters (EKS/GKE/AKS/k3s/etc).
+  resources:
+    requests:
+      storage: 5Gi

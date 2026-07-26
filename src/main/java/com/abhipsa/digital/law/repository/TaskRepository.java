@@ -28,6 +28,11 @@ public interface TaskRepository extends JpaRepository<Task, String> {
 
     List<Task> findByAssignedToId(String userId);
 
+    // A senior associate oversees their own cases and may delegate a task on
+    // one of those cases to an associate, so their visible set is "assigned
+    // to me personally" OR "on a case I'm the assigned owner of".
+    List<Task> findByAssignedToIdOrCaseDetails_AssignedUserId(String assignedToId, String caseAssignedUserId);
+
     List<Task> findByCaseDetailsId(String caseId);
 
     List<Task> findByDueDate(LocalDate dueDate);
@@ -75,6 +80,8 @@ public interface TaskRepository extends JpaRepository<Task, String> {
     Page<Task> findByTypeContainingIgnoreCase(String type, Pageable pageable);
 
     Page<Task> findByAssignedToId(String userId, Pageable pageable);
+
+    Page<Task> findByAssignedToIdOrCaseDetails_AssignedUserId(String assignedToId, String caseAssignedUserId, Pageable pageable);
 
     Page<Task> findByStatusAndAssignedToId(String status, String userId, Pageable pageable);
 
