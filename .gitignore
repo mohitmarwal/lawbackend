@@ -31,10 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-### Deployment secrets — real values, never commit ###
-.env
-.k8s-generated-secrets.txt
-scripts/deploy.log
-scripts/port-forward.log
-scripts/port-forward-err.log

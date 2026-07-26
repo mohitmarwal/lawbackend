@@ -1,0 +1,2782 @@
+
+===== deploy pipeline started Sat Jul 25 20:10:37 IST 2026 — target=backend =====
+namespace/matterly unchanged
+persistentvolumeclaim/mysql-pvc unchanged
+deployment.apps/mysql unchanged
+service/mysql unchanged
+-- building backend image
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 794B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/eclipse-temurin:21-jdk
+#2 ...
+
+#3 [auth] library/eclipse-temurin:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#4 [internal] load metadata for docker.io/library/eclipse-temurin:21-jre
+#4 ...
+
+#2 [internal] load metadata for docker.io/library/eclipse-temurin:21-jdk
+#2 DONE 1.7s
+
+#4 [internal] load metadata for docker.io/library/eclipse-temurin:21-jre
+#4 DONE 1.7s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 82B done
+#5 DONE 0.0s
+
+#6 [runtime 1/4] FROM docker.io/library/eclipse-temurin:21-jre@sha256:273396ed5998598ed1091e8d72711c2d36980a0e65103859c55a4e977a41ffd3
+#6 resolve docker.io/library/eclipse-temurin:21-jre@sha256:273396ed5998598ed1091e8d72711c2d36980a0e65103859c55a4e977a41ffd3 0.0s done
+#6 DONE 0.0s
+
+#7 [build 1/7] FROM docker.io/library/eclipse-temurin:21-jdk@sha256:da9d3a4f7650db39b918fc5a2c3da76556fb8cc8e5f3767cdea0bb409286951a
+#7 resolve docker.io/library/eclipse-temurin:21-jdk@sha256:da9d3a4f7650db39b918fc5a2c3da76556fb8cc8e5f3767cdea0bb409286951a 0.0s done
+#7 DONE 0.1s
+
+#8 [internal] load build context
+#8 transferring context: 6.68kB 0.0s done
+#8 DONE 0.0s
+
+#9 [runtime 3/4] RUN addgroup --system spring && adduser --system --ingroup spring spring
+#9 CACHED
+
+#10 [build 3/7] COPY .mvn/ .mvn/
+#10 CACHED
+
+#11 [build 4/7] COPY mvnw pom.xml ./
+#11 CACHED
+
+#12 [build 5/7] RUN chmod +x mvnw && ./mvnw -B dependency:go-offline
+#12 CACHED
+
+#13 [build 6/7] COPY src ./src
+#13 CACHED
+
+#14 [build 7/7] RUN ./mvnw -B clean package -DskipTests
+#14 CACHED
+
+#15 [runtime 2/4] WORKDIR /app
+#15 CACHED
+
+#16 [build 2/7] WORKDIR /app
+#16 CACHED
+
+#17 [runtime 4/4] COPY --from=build /app/target/*.jar app.jar
+#17 CACHED
+
+#18 exporting to image
+#18 exporting layers done
+#18 exporting manifest sha256:3471884854b3ee4f7b216dc3bd51f34da8a70169ab0d7957c146a9b85a519a5d done
+#18 exporting config sha256:6b23c3c94512e5343a95ba5b0bfa280e61c265243f0a86c18f3fe6507310e76f done
+#18 exporting attestation manifest sha256:07ed6f3408fcf99ea97e4e7caae580fead649a497c0b63d44b0dce92d8e110f7 0.0s done
+#18 exporting manifest list sha256:4570d10ae1c387e0dd06eef00f0a4e2a4d2427e6239fec8744a1643587ebb97c 0.0s done
+#18 naming to docker.io/library/matterly-backend:latest done
+#18 unpacking to docker.io/library/matterly-backend:latest 0.0s done
+#18 DONE 0.1s
+-- loading into minikube
+configmap/backend-config unchanged
+deployment.apps/backend unchanged
+service/backend unchanged
+-- rolling backend deployment
+deployment.apps/backend restarted
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+deployment "backend" successfully rolled out
+===== deploy pipeline finished Sat Jul 25 20:12:02 IST 2026 — SUCCESS =====
+
+===== deploy pipeline started Sat Jul 25 20:18:20 IST 2026 — target=backend =====
+namespace/matterly unchanged
+persistentvolumeclaim/mysql-pvc unchanged
+deployment.apps/mysql unchanged
+service/mysql unchanged
+-- building backend image
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 794B 0.0s done
+#1 DONE 0.0s
+
+#2 [auth] library/eclipse-temurin:pull token for registry-1.docker.io
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/eclipse-temurin:21-jre
+#3 DONE 1.7s
+
+#4 [internal] load metadata for docker.io/library/eclipse-temurin:21-jdk
+#4 DONE 1.7s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 82B done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 DONE 0.0s
+
+#7 [runtime 1/4] FROM docker.io/library/eclipse-temurin:21-jre@sha256:273396ed5998598ed1091e8d72711c2d36980a0e65103859c55a4e977a41ffd3
+#7 resolve docker.io/library/eclipse-temurin:21-jre@sha256:273396ed5998598ed1091e8d72711c2d36980a0e65103859c55a4e977a41ffd3 0.0s done
+#7 DONE 0.1s
+
+#8 [build 1/7] FROM docker.io/library/eclipse-temurin:21-jdk@sha256:da9d3a4f7650db39b918fc5a2c3da76556fb8cc8e5f3767cdea0bb409286951a
+#8 resolve docker.io/library/eclipse-temurin:21-jdk@sha256:da9d3a4f7650db39b918fc5a2c3da76556fb8cc8e5f3767cdea0bb409286951a 0.1s done
+#8 DONE 0.1s
+
+#6 [internal] load build context
+#6 transferring context: 6.68kB 0.0s done
+#6 DONE 0.0s
+
+#9 [build 2/7] WORKDIR /app
+#9 CACHED
+
+#10 [build 5/7] RUN chmod +x mvnw && ./mvnw -B dependency:go-offline
+#10 CACHED
+
+#11 [build 6/7] COPY src ./src
+#11 CACHED
+
+#12 [build 7/7] RUN ./mvnw -B clean package -DskipTests
+#12 CACHED
+
+#13 [runtime 3/4] RUN addgroup --system spring && adduser --system --ingroup spring spring
+#13 CACHED
+
+#14 [runtime 2/4] WORKDIR /app
+#14 CACHED
+
+#15 [build 4/7] COPY mvnw pom.xml ./
+#15 CACHED
+
+#16 [build 3/7] COPY .mvn/ .mvn/
+#16 CACHED
+
+#17 [runtime 4/4] COPY --from=build /app/target/*.jar app.jar
+#17 CACHED
+
+#18 exporting to image
+#18 exporting layers done
+#18 exporting manifest sha256:3471884854b3ee4f7b216dc3bd51f34da8a70169ab0d7957c146a9b85a519a5d done
+#18 exporting config sha256:6b23c3c94512e5343a95ba5b0bfa280e61c265243f0a86c18f3fe6507310e76f done
+#18 exporting attestation manifest sha256:5ba8f18ae9259a418fd1448c0a6dd34497b91ba7d6faf109bca75da2b062493d 0.0s done
+#18 exporting manifest list sha256:c8c3df01ddc9f7d65572a23a8c1aa0e1ab51f53aa1205fbe9f5c77720a51b936
+#18 exporting manifest list sha256:c8c3df01ddc9f7d65572a23a8c1aa0e1ab51f53aa1205fbe9f5c77720a51b936 0.0s done
+#18 naming to docker.io/library/matterly-backend:latest done
+#18 unpacking to docker.io/library/matterly-backend:latest 0.0s done
+#18 DONE 0.2s
+-- loading into minikube
+
+===== deploy pipeline started Sat Jul 25 20:18:30 IST 2026 — target=frontend =====
+namespace/matterly unchanged
+persistentvolumeclaim/mysql-pvc unchanged
+deployment.apps/mysql unchanged
+service/mysql unchanged
+-- building frontend image
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 697B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:20-alpine
+#2 ...
+
+#3 [auth] library/node:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#4 [auth] library/nginx:pull token for registry-1.docker.io
+#4 DONE 0.0s
+
+#5 [internal] load metadata for docker.io/library/nginx:1.27-alpine
+#5 ...
+
+#2 [internal] load metadata for docker.io/library/node:20-alpine
+#2 DONE 1.7s
+
+#5 [internal] load metadata for docker.io/library/nginx:1.27-alpine
+#5 DONE 1.7s
+
+#6 [internal] load .dockerignore
+#6 transferring context: 72B 0.0s done
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 transferring context: 3.09kB 0.0s done
+#7 DONE 0.1s
+
+#8 [build 1/6] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+#8 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 0.1s done
+#8 DONE 0.1s
+
+#9 [runtime 1/3] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#9 resolve docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10 0.1s done
+#9 DONE 0.1s
+
+#10 [build 5/6] COPY . .
+#10 CACHED
+
+#11 [build 4/6] RUN npm ci
+#11 CACHED
+
+#12 [runtime 2/3] COPY --from=build /app/dist /usr/share/nginx/html
+#12 CACHED
+
+#13 [build 6/6] RUN npm run build
+#13 CACHED
+
+#14 [build 3/6] COPY package.json package-lock.json ./
+#14 CACHED
+
+#15 [build 2/6] WORKDIR /app
+#15 CACHED
+
+#16 [runtime 3/3] COPY nginx.conf /etc/nginx/conf.d/default.conf
+#16 CACHED
+
+#17 exporting to image
+#17 exporting layers 0.0s done
+#17 exporting manifest sha256:41d732c98085b555c108441eca2321bfc24f11b33ecbc6ca694ca79d6cfc0f92 done
+#17 exporting config sha256:3b8dc8284a3343ba27277fc0094c6be06d8b6d73138a001ee8438be84a8bdf92
+#17 exporting config sha256:3b8dc8284a3343ba27277fc0094c6be06d8b6d73138a001ee8438be84a8bdf92 done
+#17 exporting attestation manifest sha256:36194c0de811f151262ce7b65a5822f521590dc6ccd86bd6f9a60e5c72c40b16 0.1s done
+#17 exporting manifest list sha256:1f8402c1ac0774c5ee88316d979c1160396eafabd0602a958b21365f99ecb993 0.0s done
+#17 naming to docker.io/library/matterly-frontend:latest
+#17 naming to docker.io/library/matterly-frontend:latest done
+#17 unpacking to docker.io/library/matterly-frontend:latest 0.0s done
+#17 DONE 0.3s
+-- loading into minikube
+configmap/backend-config unchanged
+deployment.apps/backend unchanged
+service/backend unchanged
+ployment.apps/frontend restarted
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 out of 2Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+deployment "backend" successfully rolled out
+===== deploy pipeline finished Sat Jul 25 20:19:52 IST 2026 — SUCCESS =====
+
+===== deploy pipeline started Sat Jul 25 20:20:03 IST 2026 — target=backend =====
+namespace/matterly unchanged
+persistentvolumeclaim/mysql-pvc unchanged
+deployment.apps/mysql unchanged
+service/mysql unchanged
+-- building backend image
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 794B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/eclipse-temurin:21-jre
+#2 DONE 0.9s
+
+#3 [internal] load metadata for docker.io/library/eclipse-temurin:21-jdk
+#3 DONE 1.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 82B done
+#4 DONE 0.0s
+
+#5 [runtime 1/4] FROM docker.io/library/eclipse-temurin:21-jre@sha256:273396ed5998598ed1091e8d72711c2d36980a0e65103859c55a4e977a41ffd3
+#5 resolve docker.io/library/eclipse-temurin:21-jre@sha256:273396ed5998598ed1091e8d72711c2d36980a0e65103859c55a4e977a41ffd3 0.0s done
+#5 DONE 0.0s
+
+#6 [build 1/7] FROM docker.io/library/eclipse-temurin:21-jdk@sha256:da9d3a4f7650db39b918fc5a2c3da76556fb8cc8e5f3767cdea0bb409286951a
+#6 resolve docker.io/library/eclipse-temurin:21-jdk@sha256:da9d3a4f7650db39b918fc5a2c3da76556fb8cc8e5f3767cdea0bb409286951a 0.0s done
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 transferring context: 6.68kB 0.0s done
+#7 DONE 0.0s
+
+#8 [build 4/7] COPY mvnw pom.xml ./
+#8 CACHED
+
+#9 [build 6/7] COPY src ./src
+#9 CACHED
+
+#10 [build 7/7] RUN ./mvnw -B clean package -DskipTests
+#10 CACHED
+
+#11 [runtime 2/4] WORKDIR /app
+#11 CACHED
+
+#12 [runtime 3/4] RUN addgroup --system spring && adduser --system --ingroup spring spring
+#12 CACHED
+
+#13 [build 2/7] WORKDIR /app
+#13 CACHED
+
+#14 [build 3/7] COPY .mvn/ .mvn/
+#14 CACHED
+
+#15 [build 5/7] RUN chmod +x mvnw && ./mvnw -B dependency:go-offline
+#15 CACHED
+
+#16 [runtime 4/4] COPY --from=build /app/target/*.jar app.jar
+#16 CACHED
+
+#17 exporting to image
+#17 exporting layers done
+#17 exporting manifest sha256:3471884854b3ee4f7b216dc3bd51f34da8a70169ab0d7957c146a9b85a519a5d done
+#17 exporting config sha256:6b23c3c94512e5343a95ba5b0bfa280e61c265243f0a86c18f3fe6507310e76f done
+#17 exporting attestation manifest sha256:f2943484e5e233fcac8f9e5be54a154536bf4d56ebe9d0e42cba24a9656e5112 0.0s done
+#17 exporting manifest list sha256:575b0ec88ea4f3765a18efcbdbbb3ac04b76e7eb753548a5d8494d6cbb6f940b 0.0s done
+#17 naming to docker.io/library/matterly-backend:latest
+#17 naming to docker.io/library/matterly-backend:latest done
+#17 unpacking to docker.io/library/matterly-backend:latest 0.0s done
+#17 DONE 0.1s
+-- loading into minikube
+configmap/backend-config unchanged
+deployment.apps/backend unchanged
+service/backend unchanged
+-- rolling backend deployment
+deployment.apps/backend restarted
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment spec update to be observed...
+Waiting for deployment spec update to be observed...
+Waiting for deployment "backend" rollout to finish: 0 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 0 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+deployment "backend" successfully rolled out
+-DskipTests
+#9 CACHED
+
+#10 [build 2/7] WORKDIR /app
+#10 CACHED
+
+#11 [build 5/7] RUN chmod +x mvnw && ./mvnw -B dependency:go-offline
+#11 CACHED
+
+#12 [build 4/7] COPY mvnw pom.xml ./
+#12 CACHED
+
+#13 [build 3/7] COPY .mvn/ .mvn/
+#13 CACHED
+
+#14 [runtime 2/4] WORKDIR /app
+#14 CACHED
+
+#15 [runtime 3/4] RUN addgroup --system spring && adduser --system --ingroup spring spring
+#15 CACHED
+
+#16 [runtime 4/4] COPY --from=build /app/target/*.jar app.jar
+#16 CACHED
+
+#17 exporting to image
+#17 exporting layers done
+#17 exporting manifest sha256:3471884854b3ee4f7b216dc3bd51f34da8a70169ab0d7957c146a9b85a519a5d done
+#17 exporting config sha256:6b23c3c94512e5343a95ba5b0bfa280e61c265243f0a86c18f3fe6507310e76f done
+#17 exporting attestation manifest sha256:9ee04035ac3a80efbeac9143135d80398791f9d0a7cdcffce060d3210c0f316c 0.0s done
+#17 exporting manifest list sha256:465b9edf71d46ce975457220077000b36704d7fdb383d8f37c5e6b0bfeac84f5 0.0s done
+#17 naming to docker.io/library/matterly-backend:latest done
+#17 unpacking to docker.io/library/matterly-backend:latest 0.0s done
+#17 DONE 0.2s
+-- loading into minikube
+configmap/backend-config unchanged
+deployment.apps/backend unchanged
+service/backend unchanged
+-- rolling backend deployment
+deployment.apps/backend restarted
+Waiting for deployment spec update to be observed...
+Waiting for deployment "backend" rollout to finish: 0 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 0 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+deployment "backend" successfully rolled out
+===== deploy pipeline finished Sat Jul 25 20:22:33 IST 2026 — SUCCESS =====
+===== deploy pipeline finished Sat Jul 25 20:22:33 IST 2026 — SUCCESS =====
+
+===== deploy pipeline started Sat, Jul 25, 2026  9:21:53 PM — target=both =====
+namespace/matterly unchanged
+persistentvolumeclaim/mysql-pvc unchanged
+deployment.apps/mysql unchanged
+service/mysql unchanged
+-- building backend image
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 794B 0.0s done
+#1 DONE 0.0s
+
+#2 [auth] library/eclipse-temurin:pull token for registry-1.docker.io
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/eclipse-temurin:21-jre
+#3 ...
+
+#4 [internal] load metadata for docker.io/library/eclipse-temurin:21-jdk
+#4 DONE 1.5s
+
+#3 [internal] load metadata for docker.io/library/eclipse-temurin:21-jre
+#3 DONE 1.5s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 82B done
+#5 DONE 0.0s
+
+#6 [build 1/7] FROM docker.io/library/eclipse-temurin:21-jdk@sha256:da9d3a4f7650db39b918fc5a2c3da76556fb8cc8e5f3767cdea0bb409286951a
+#6 resolve docker.io/library/eclipse-temurin:21-jdk@sha256:da9d3a4f7650db39b918fc5a2c3da76556fb8cc8e5f3767cdea0bb409286951a 0.0s done
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 transferring context: 14.78kB 0.0s done
+#7 DONE 0.0s
+
+#8 [runtime 1/4] FROM docker.io/library/eclipse-temurin:21-jre@sha256:273396ed5998598ed1091e8d72711c2d36980a0e65103859c55a4e977a41ffd3
+#8 resolve docker.io/library/eclipse-temurin:21-jre@sha256:273396ed5998598ed1091e8d72711c2d36980a0e65103859c55a4e977a41ffd3 0.0s done
+#8 DONE 0.1s
+
+#9 [build 2/7] WORKDIR /app
+#9 CACHED
+
+#10 [build 3/7] COPY .mvn/ .mvn/
+#10 CACHED
+
+#11 [build 4/7] COPY mvnw pom.xml ./
+#11 CACHED
+
+#12 [build 5/7] RUN chmod +x mvnw && ./mvnw -B dependency:go-offline
+#12 CACHED
+
+#13 [build 6/7] COPY src ./src
+#13 DONE 0.1s
+
+#14 [build 7/7] RUN ./mvnw -B clean package -DskipTests
+#14 3.025 [INFO] Scanning for projects...
+#14 3.603 [INFO] 
+#14 3.603 [INFO] ----------------------< com.abhipsa.digital:law >-----------------------
+#14 3.603 [INFO] Building  0.0.1-SNAPSHOT
+#14 3.603 [INFO]   from pom.xml
+#14 3.603 [INFO] --------------------------------[ jar ]---------------------------------
+#14 4.719 [INFO] 
+#14 4.719 [INFO] --- clean:3.5.0:clean (default-clean) @ law ---
+#14 4.820 [INFO] 
+#14 4.820 [INFO] --- resources:3.5.0:resources (default-resources) @ law ---
+#14 4.991 [INFO] Copying 1 resource from src/main/resources to target/classes
+#14 5.021 [INFO] Copying 0 resource from src/main/resources to target/classes
+#14 5.023 [INFO] 
+#14 5.023 [INFO] --- compiler:3.15.0:compile (default-compile) @ law ---
+#14 5.297 [INFO] Recompiling the module because of changed source code.
+#14 5.318 [INFO] Compiling 67 source files with javac [debug parameters release 17] to target/classes
+#14 9.922 [INFO] Annotation processing is enabled because one or more processors were found
+#14 9.922   on the class path. A future release of javac may disable annotation processing
+#14 9.922   unless at least one processor is specified by name (-processor), or a search
+#14 9.922   path is specified (--processor-path, --processor-module-path), or annotation
+#14 9.922   processing is enabled explicitly (-proc:only, -proc:full).
+#14 9.922   Use -Xlint:-options to suppress this message.
+#14 9.922   Use -proc:none to disable annotation processing.
+#14 9.922 [INFO] /app/src/main/java/com/abhipsa/digital/law/config/AuditInterceptor.java: Some input files use or override a deprecated API.
+#14 9.922 [INFO] /app/src/main/java/com/abhipsa/digital/law/config/AuditInterceptor.java: Recompile with -Xlint:deprecation for details.
+#14 9.923 [INFO] 
+#14 9.923 [INFO] --- resources:3.5.0:testResources (default-testResources) @ law ---
+#14 9.932 [INFO] skip non existing resourceDirectory /app/src/test/resources
+#14 9.932 [INFO] 
+#14 9.933 [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ law ---
+#14 9.949 [INFO] Recompiling the module because of changed dependency.
+#14 9.952 [INFO] Compiling 1 source file with javac [debug parameters release 17] to target/test-classes
+#14 10.53 [INFO] Annotation processing is enabled because one or more processors were found
+#14 10.53   on the class path. A future release of javac may disable annotation processing
+#14 10.53   unless at least one processor is specified by name (-processor), or a search
+#14 10.53   path is specified (--processor-path, --processor-module-path), or annotation
+#14 10.53   processing is enabled explicitly (-proc:only, -proc:full).
+#14 10.53   Use -Xlint:-options to suppress this message.
+#14 10.53   Use -proc:none to disable annotation processing.
+#14 10.53 [INFO] 
+#14 10.53 [INFO] --- surefire:3.5.6:test (default-test) @ law ---
+#14 10.70 [INFO] Tests are skipped.
+#14 10.70 [INFO] 
+#14 10.70 [INFO] --- jar:3.5.0:jar (default-jar) @ law ---
+#14 11.12 [INFO] Building jar: /app/target/law-0.0.1-SNAPSHOT.jar
+#14 11.22 [INFO] 
+#14 11.22 [INFO] --- spring-boot:4.1.0:repackage (repackage) @ law ---
+#14 11.88 [INFO] Replacing main artifact /app/target/law-0.0.1-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+#14 11.88 [INFO] The original artifact has been renamed to /app/target/law-0.0.1-SNAPSHOT.jar.original
+#14 11.88 [INFO] ------------------------------------------------------------------------
+#14 11.88 [INFO] BUILD SUCCESS
+#14 11.88 [INFO] ------------------------------------------------------------------------
+#14 11.88 [INFO] Total time:  8.891 s
+#14 11.88 [INFO] Finished at: 2026-07-25T15:52:09Z
+#14 11.88 [INFO] ------------------------------------------------------------------------
+#14 DONE 12.0s
+
+#15 [runtime 2/4] WORKDIR /app
+#15 CACHED
+
+#16 [runtime 3/4] RUN addgroup --system spring && adduser --system --ingroup spring spring
+#16 CACHED
+
+#17 [runtime 4/4] COPY --from=build /app/target/*.jar app.jar
+#17 DONE 0.1s
+
+#18 exporting to image
+#18 exporting layers
+#18 exporting layers 3.7s done
+#18 exporting manifest sha256:1711aec5c340d000d6d7c5a66cfde1e6da1c7fee559ba5ecd8a0f7c6bae0f0ad 0.0s done
+#18 exporting config sha256:2ea37fe02944d611824e7b752d75784c47208745c27efef53ebaf87ea9ce9a7b 0.0s done
+#18 exporting attestation manifest sha256:0af186c90b4ffffd0f65f07947f89eed110547423ec3738327e790d0b5487673 0.0s done
+#18 exporting manifest list sha256:e3ad54f4809d57b63bc8f1f22c11bb15b395890ad1a418c269262557c4fce8e9 0.0s done
+#18 naming to docker.io/library/matterly-backend:latest
+#18 naming to docker.io/library/matterly-backend:latest done
+#18 unpacking to docker.io/library/matterly-backend:latest
+#18 unpacking to docker.io/library/matterly-backend:latest 0.6s done
+#18 DONE 4.5s
+-- loading into minikube
+configmap/backend-config unchanged
+deployment.apps/backend unchanged
+service/backend unchanged
+-- rolling backend deployment
+deployment.apps/backend restarted
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+deployment "backend" successfully rolled out
+-- building frontend image
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 697B 0.0s done
+#1 DONE 0.0s
+
+#2 [auth] library/node:pull token for registry-1.docker.io
+#2 DONE 0.0s
+
+#3 [auth] library/nginx:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#4 [internal] load metadata for docker.io/library/nginx:1.27-alpine
+#4 DONE 1.5s
+
+#5 [internal] load metadata for docker.io/library/node:20-alpine
+#5 DONE 1.5s
+
+#6 [internal] load .dockerignore
+#6 transferring context: 72B done
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 transferring context: 3.09kB 0.0s done
+#7 DONE 0.0s
+
+#8 [build 1/6] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+#8 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 0.1s done
+#8 DONE 0.1s
+
+#9 [runtime 1/3] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#9 resolve docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10 0.1s done
+#9 DONE 0.1s
+
+#10 [build 2/6] WORKDIR /app
+#10 CACHED
+
+#11 [build 5/6] COPY . .
+#11 CACHED
+
+#12 [build 3/6] COPY package.json package-lock.json ./
+#12 CACHED
+
+#13 [build 4/6] RUN npm ci
+#13 CACHED
+
+#14 [build 6/6] RUN npm run build
+#14 CACHED
+
+#15 [runtime 2/3] COPY --from=build /app/dist /usr/share/nginx/html
+#15 CACHED
+
+#16 [runtime 3/3] COPY nginx.conf /etc/nginx/conf.d/default.conf
+#16 CACHED
+
+#17 exporting to image
+#17 exporting layers done
+#17 exporting manifest sha256:41d732c98085b555c108441eca2321bfc24f11b33ecbc6ca694ca79d6cfc0f92 done
+#17 exporting config sha256:3b8dc8284a3343ba27277fc0094c6be06d8b6d73138a001ee8438be84a8bdf92 done
+#17 exporting attestation manifest sha256:03a84c06556de34191aab6446720c7f36eb3c26b74b08464c742f4a8f9ee47a7 0.0s done
+#17 exporting manifest list sha256:7041cd1f2f238d006755c627c47a1fc8bb4a8a8816e3d9dcd2bcfbafd2ea64e8 0.0s done
+#17 naming to docker.io/library/matterly-frontend:latest done
+#17 unpacking to docker.io/library/matterly-frontend:latest 0.0s done
+#17 DONE 0.2s
+-- loading into minikube
+deployment.apps/frontend unchanged
+service/frontend unchanged
+-- rolling frontend deployment
+deployment.apps/frontend restarted
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+deployment "frontend" successfully rolled out
+===== deploy pipeline finished Sat, Jul 25, 2026  9:24:22 PM — SUCCESS =====
+
+===== deploy pipeline started Sat, Jul 25, 2026  9:30:35 PM — target=both =====
+namespace/matterly unchanged
+persistentvolumeclaim/mysql-pvc unchanged
+deployment.apps/mysql unchanged
+service/mysql unchanged
+-- building backend image
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 794B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/eclipse-temurin:21-jdk
+#2 ...
+
+#3 [auth] library/eclipse-temurin:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#4 [internal] load metadata for docker.io/library/eclipse-temurin:21-jre
+#4 DONE 2.6s
+
+#2 [internal] load metadata for docker.io/library/eclipse-temurin:21-jdk
+#2 DONE 2.6s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 82B done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 DONE 0.0s
+
+#7 [build 1/7] FROM docker.io/library/eclipse-temurin:21-jdk@sha256:da9d3a4f7650db39b918fc5a2c3da76556fb8cc8e5f3767cdea0bb409286951a
+#7 resolve docker.io/library/eclipse-temurin:21-jdk@sha256:da9d3a4f7650db39b918fc5a2c3da76556fb8cc8e5f3767cdea0bb409286951a 0.0s done
+#7 DONE 0.1s
+
+#8 [runtime 1/4] FROM docker.io/library/eclipse-temurin:21-jre@sha256:273396ed5998598ed1091e8d72711c2d36980a0e65103859c55a4e977a41ffd3
+#8 resolve docker.io/library/eclipse-temurin:21-jre@sha256:273396ed5998598ed1091e8d72711c2d36980a0e65103859c55a4e977a41ffd3 0.0s done
+#8 DONE 0.1s
+
+#6 [internal] load build context
+#6 transferring context: 14.35kB 0.0s done
+#6 DONE 0.0s
+
+#9 [build 2/7] WORKDIR /app
+#9 CACHED
+
+#10 [build 3/7] COPY .mvn/ .mvn/
+#10 CACHED
+
+#11 [build 4/7] COPY mvnw pom.xml ./
+#11 CACHED
+
+#12 [build 5/7] RUN chmod +x mvnw && ./mvnw -B dependency:go-offline
+#12 CACHED
+
+#13 [build 6/7] COPY src ./src
+#13 DONE 0.1s
+
+#14 [build 7/7] RUN ./mvnw -B clean package -DskipTests
+#14 3.420 [INFO] Scanning for projects...
+#14 4.115 [INFO] 
+#14 4.117 [INFO] ----------------------< com.abhipsa.digital:law >-----------------------
+#14 4.117 [INFO] Building  0.0.1-SNAPSHOT
+#14 4.117 [INFO]   from pom.xml
+#14 4.118 [INFO] --------------------------------[ jar ]---------------------------------
+#14 5.725 [INFO] 
+#14 5.725 [INFO] --- clean:3.5.0:clean (default-clean) @ law ---
+#14 5.973 [INFO] 
+#14 5.974 [INFO] --- resources:3.5.0:resources (default-resources) @ law ---
+#14 6.262 [INFO] Copying 1 resource from src/main/resources to target/classes
+#14 6.292 [INFO] Copying 0 resource from src/main/resources to target/classes
+#14 6.295 [INFO] 
+#14 6.295 [INFO] --- compiler:3.15.0:compile (default-compile) @ law ---
+#14 6.691 [INFO] Recompiling the module because of changed source code.
+#14 6.728 [INFO] Compiling 67 source files with javac [debug parameters release 17] to target/classes
+#14 13.38 [INFO] Annotation processing is enabled because one or more processors were found
+#14 13.38   on the class path. A future release of javac may disable annotation processing
+#14 13.38   unless at least one processor is specified by name (-processor), or a search
+#14 13.38   path is specified (--processor-path, --processor-module-path), or annotation
+#14 13.38   processing is enabled explicitly (-proc:only, -proc:full).
+#14 13.38   Use -Xlint:-options to suppress this message.
+#14 13.38   Use -proc:none to disable annotation processing.
+#14 13.39 [INFO] /app/src/main/java/com/abhipsa/digital/law/config/AuditInterceptor.java: Some input files use or override a deprecated API.
+#14 13.39 [INFO] /app/src/main/java/com/abhipsa/digital/law/config/AuditInterceptor.java: Recompile with -Xlint:deprecation for details.
+#14 13.39 [INFO] 
+#14 13.39 [INFO] --- resources:3.5.0:testResources (default-testResources) @ law ---
+#14 13.39 [INFO] skip non existing resourceDirectory /app/src/test/resources
+#14 13.39 [INFO] 
+#14 13.39 [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ law ---
+#14 13.43 [INFO] Recompiling the module because of changed dependency.
+#14 13.44 [INFO] Compiling 1 source file with javac [debug parameters release 17] to target/test-classes
+#14 14.30 [INFO] Annotation processing is enabled because one or more processors were found
+#14 14.30   on the class path. A future release of javac may disable annotation processing
+#14 14.30   unless at least one processor is specified by name (-processor), or a search
+#14 14.30   path is specified (--processor-path, --processor-module-path), or annotation
+#14 14.30   processing is enabled explicitly (-proc:only, -proc:full).
+#14 14.30   Use -Xlint:-options to suppress this message.
+#14 14.30   Use -proc:none to disable annotation processing.
+#14 14.30 [INFO] 
+#14 14.30 [INFO] --- surefire:3.5.6:test (default-test) @ law ---
+#14 14.57 [INFO] Tests are skipped.
+#14 14.57 [INFO] 
+#14 14.57 [INFO] --- jar:3.5.0:jar (default-jar) @ law ---
+#14 15.19 [INFO] Building jar: /app/target/law-0.0.1-SNAPSHOT.jar
+#14 15.32 [INFO] 
+#14 15.32 [INFO] --- spring-boot:4.1.0:repackage (repackage) @ law ---
+#14 16.27 [INFO] Replacing main artifact /app/target/law-0.0.1-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+#14 16.27 [INFO] The original artifact has been renamed to /app/target/law-0.0.1-SNAPSHOT.jar.original
+#14 16.27 [INFO] ------------------------------------------------------------------------
+#14 16.27 [INFO] BUILD SUCCESS
+#14 16.27 [INFO] ------------------------------------------------------------------------
+#14 16.28 [INFO] Total time:  12.909 s
+#14 16.28 [INFO] Finished at: 2026-07-25T16:00:59Z
+#14 16.28 [INFO] ------------------------------------------------------------------------
+#14 DONE 16.4s
+
+#15 [runtime 2/4] WORKDIR /app
+#15 CACHED
+
+#16 [runtime 3/4] RUN addgroup --system spring && adduser --system --ingroup spring spring
+#16 CACHED
+
+#17 [runtime 4/4] COPY --from=build /app/target/*.jar app.jar
+#17 DONE 0.1s
+
+#18 exporting to image
+#18 exporting layers
+#18 exporting layers 3.8s done
+#18 exporting manifest sha256:a25c617d128b8e6dd09c198993985654d55da1eaf5f9736027847b69c2c71ae6 0.0s done
+#18 exporting config sha256:644e32aa2791e1cbd47f18d243426e39f73e59e3bbf3b67a9e092561ef27a828 0.0s done
+#18 exporting attestation manifest sha256:96e97455edab05184308743bc1d2f10b816a95b878671f1f09c8ff097cfee847 0.0s done
+#18 exporting manifest list sha256:4cec16d2e29bb9358bb0821d08afa3e7896410c16a0a04f4df56c01bfd3fdf2e 0.0s done
+#18 naming to docker.io/library/matterly-backend:latest
+#18 naming to docker.io/library/matterly-backend:latest done
+#18 unpacking to docker.io/library/matterly-backend:latest
+#18 unpacking to docker.io/library/matterly-backend:latest 0.6s done
+#18 DONE 4.6s
+-- loading into minikube
+configmap/backend-config unchanged
+deployment.apps/backend unchanged
+service/backend unchanged
+-- rolling backend deployment
+deployment.apps/backend restarted
+Waiting for deployment "backend" rollout to finish: 0 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+error: timed out waiting for the condition
+FAILED: rollout status backend
+
+===== deploy pipeline started Sat, Jul 25, 2026  9:37:05 PM — target=both =====
+namespace/matterly unchanged
+persistentvolumeclaim/mysql-pvc unchanged
+deployment.apps/mysql unchanged
+service/mysql unchanged
+-- building backend image
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 794B done
+#1 DONE 0.0s
+
+#2 [auth] library/eclipse-temurin:pull token for registry-1.docker.io
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/eclipse-temurin:21-jdk
+#3 DONE 1.4s
+
+#4 [internal] load metadata for docker.io/library/eclipse-temurin:21-jre
+#4 DONE 1.4s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 82B 0.0s done
+#5 DONE 0.0s
+
+#6 [runtime 1/4] FROM docker.io/library/eclipse-temurin:21-jre@sha256:273396ed5998598ed1091e8d72711c2d36980a0e65103859c55a4e977a41ffd3
+#6 resolve docker.io/library/eclipse-temurin:21-jre@sha256:273396ed5998598ed1091e8d72711c2d36980a0e65103859c55a4e977a41ffd3 0.0s done
+#6 DONE 0.0s
+
+#7 [build 1/7] FROM docker.io/library/eclipse-temurin:21-jdk@sha256:da9d3a4f7650db39b918fc5a2c3da76556fb8cc8e5f3767cdea0bb409286951a
+#7 resolve docker.io/library/eclipse-temurin:21-jdk@sha256:da9d3a4f7650db39b918fc5a2c3da76556fb8cc8e5f3767cdea0bb409286951a 0.0s done
+#7 DONE 0.0s
+
+#8 [internal] load build context
+#8 transferring context: 7.21kB 0.0s done
+#8 DONE 0.0s
+
+#9 [runtime 3/4] RUN addgroup --system spring && adduser --system --ingroup spring spring
+#9 CACHED
+
+#10 [build 6/7] COPY src ./src
+#10 CACHED
+
+#11 [runtime 2/4] WORKDIR /app
+#11 CACHED
+
+#12 [build 2/7] WORKDIR /app
+#12 CACHED
+
+#13 [build 3/7] COPY .mvn/ .mvn/
+#13 CACHED
+
+#14 [build 4/7] COPY mvnw pom.xml ./
+#14 CACHED
+
+#15 [build 5/7] RUN chmod +x mvnw && ./mvnw -B dependency:go-offline
+#15 CACHED
+
+#16 [build 7/7] RUN ./mvnw -B clean package -DskipTests
+#16 CACHED
+
+#17 [runtime 4/4] COPY --from=build /app/target/*.jar app.jar
+#17 CACHED
+
+#18 exporting to image
+#18 exporting layers done
+#18 exporting manifest sha256:a25c617d128b8e6dd09c198993985654d55da1eaf5f9736027847b69c2c71ae6 done
+#18 exporting config sha256:644e32aa2791e1cbd47f18d243426e39f73e59e3bbf3b67a9e092561ef27a828 done
+#18 exporting attestation manifest sha256:b54aa4b9a4bf22f7ab75b797611698b9e2ad8783c2ffaca6182ca97800d854aa 0.0s done
+#18 exporting manifest list sha256:c18e85244a876c16576397961b45cf5842cd557deba9198e58e935fb5d5a3538 0.0s done
+#18 naming to docker.io/library/matterly-backend:latest
+#18 naming to docker.io/library/matterly-backend:latest done
+#18 unpacking to docker.io/library/matterly-backend:latest 0.0s done
+#18 DONE 0.1s
+-- loading into minikube
+configmap/backend-config unchanged
+deployment.apps/backend configured
+service/backend unchanged
+-- rolling backend deployment
+deployment.apps/backend restarted
+Waiting for deployment spec update to be observed...
+Waiting for deployment spec update to be observed...
+Waiting for deployment "backend" rollout to finish: 0 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 0 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 0 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+deployment "backend" successfully rolled out
+-- building frontend image
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 697B 0.0s done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/nginx:1.27-alpine
+#2 ...
+
+#3 [auth] library/nginx:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#4 [auth] library/node:pull token for registry-1.docker.io
+#4 DONE 0.0s
+
+#5 [internal] load metadata for docker.io/library/node:20-alpine
+#5 DONE 2.1s
+
+#2 [internal] load metadata for docker.io/library/nginx:1.27-alpine
+#2 DONE 2.1s
+
+#6 [internal] load .dockerignore
+#6 transferring context: 72B 0.0s done
+#6 DONE 0.1s
+
+#7 [internal] load build context
+#7 transferring context: 20.43kB 0.1s done
+#7 DONE 0.1s
+
+#8 [build 1/6] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+#8 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+#8 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 0.1s done
+#8 DONE 0.2s
+
+#9 [runtime 1/3] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#9 resolve docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10 0.1s done
+#9 DONE 0.2s
+
+#10 [build 2/6] WORKDIR /app
+#10 CACHED
+
+#11 [build 3/6] COPY package.json package-lock.json ./
+#11 CACHED
+
+#12 [build 4/6] RUN npm ci
+#12 CACHED
+
+#13 [build 5/6] COPY . .
+#13 DONE 0.2s
+
+#14 [build 6/6] RUN npm run build
+#14 1.189 
+#14 1.189 > lawyer-ui@0.0.0 build
+#14 1.189 > vite build
+#14 1.189 
+#14 2.008 vite v5.4.21 building for production...
+#14 2.138 transforming...
+#14 6.431 ✓ 131 modules transformed.
+#14 6.940 rendering chunks...
+#14 6.970 computing gzip size...
+#14 6.996 dist/index.html                              0.94 kB │ gzip:   0.46 kB
+#14 6.996 dist/assets/tabler-icons-DnZiL_sy.woff2    460.04 kB
+#14 6.997 dist/assets/tabler-icons-BWE4Tlyy.woff     790.63 kB
+#14 6.997 dist/assets/tabler-icons-DMRaotGC.ttf    2,824.36 kB
+#14 6.997 dist/assets/index-CqkCYTgv.css             204.08 kB │ gzip:  40.11 kB
+#14 6.997 dist/assets/index-CGSHXzZf.js              464.13 kB │ gzip: 114.10 kB
+#14 6.998 ✓ built in 4.92s
+#14 DONE 9.2s
+
+#9 [runtime 1/3] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#9 CACHED
+
+#15 [runtime 2/3] COPY --from=build /app/dist /usr/share/nginx/html
+#15 DONE 0.0s
+
+#16 [runtime 3/3] COPY nginx.conf /etc/nginx/conf.d/default.conf
+#16 DONE 0.0s
+
+#17 exporting to image
+#17 exporting layers
+#17 exporting layers 0.3s done
+#17 exporting manifest sha256:b8e279c2f6db392415d4ce34468a4df47ea73a4f159069284917a7519f0ca363 0.0s done
+#17 exporting config sha256:c92c849b6c832dcd76851d68c218923b6fc6ae603792d4fae2ac011f5db8222a 0.0s done
+#17 exporting attestation manifest sha256:5ea5658382650da1a3e67e21e2e033c56dff46861e4f323bf3f8be1fd89a3e92 0.0s done
+#17 exporting manifest list sha256:cd1a50ddbf97b9a8bc0ce83d16407085d0e03bee47c8b2a6f3d5c31881c8a961 0.0s done
+#17 naming to docker.io/library/matterly-frontend:latest
+#17 naming to docker.io/library/matterly-frontend:latest done
+#17 unpacking to docker.io/library/matterly-frontend:latest 0.1s done
+#17 DONE 0.7s
+-- loading into minikube
+deployment.apps/frontend unchanged
+service/frontend unchanged
+-- rolling frontend deployment
+deployment.apps/frontend restarted
+Waiting for deployment spec update to be observed...
+Waiting for deployment "frontend" rollout to finish: 0 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+deployment "frontend" successfully rolled out
+===== deploy pipeline finished Sat, Jul 25, 2026  9:41:18 PM — SUCCESS =====
+
+===== deploy pipeline started Sat, Jul 25, 2026  9:45:54 PM — target=both =====
+namespace/matterly unchanged
+persistentvolumeclaim/mysql-pvc unchanged
+deployment.apps/mysql unchanged
+service/mysql unchanged
+-- building backend image
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 794B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/eclipse-temurin:21-jre
+#2 ...
+
+#3 [auth] library/eclipse-temurin:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#4 [internal] load metadata for docker.io/library/eclipse-temurin:21-jdk
+#4 DONE 1.8s
+
+#2 [internal] load metadata for docker.io/library/eclipse-temurin:21-jre
+#2 DONE 1.8s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 82B done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 DONE 0.0s
+
+#7 [build 1/7] FROM docker.io/library/eclipse-temurin:21-jdk@sha256:da9d3a4f7650db39b918fc5a2c3da76556fb8cc8e5f3767cdea0bb409286951a
+#7 resolve docker.io/library/eclipse-temurin:21-jdk@sha256:da9d3a4f7650db39b918fc5a2c3da76556fb8cc8e5f3767cdea0bb409286951a 0.1s done
+#7 DONE 0.1s
+
+#8 [runtime 1/4] FROM docker.io/library/eclipse-temurin:21-jre@sha256:273396ed5998598ed1091e8d72711c2d36980a0e65103859c55a4e977a41ffd3
+#8 resolve docker.io/library/eclipse-temurin:21-jre@sha256:273396ed5998598ed1091e8d72711c2d36980a0e65103859c55a4e977a41ffd3 0.0s done
+#8 DONE 0.1s
+
+#6 [internal] load build context
+#6 transferring context: 7.21kB 0.0s done
+#6 DONE 0.0s
+
+#9 [runtime 3/4] RUN addgroup --system spring && adduser --system --ingroup spring spring
+#9 CACHED
+
+#10 [build 2/7] WORKDIR /app
+#10 CACHED
+
+#11 [build 4/7] COPY mvnw pom.xml ./
+#11 CACHED
+
+#12 [build 6/7] COPY src ./src
+#12 CACHED
+
+#13 [build 7/7] RUN ./mvnw -B clean package -DskipTests
+#13 CACHED
+
+#14 [build 3/7] COPY .mvn/ .mvn/
+#14 CACHED
+
+#15 [runtime 2/4] WORKDIR /app
+#15 CACHED
+
+#16 [build 5/7] RUN chmod +x mvnw && ./mvnw -B dependency:go-offline
+#16 CACHED
+
+#17 [runtime 4/4] COPY --from=build /app/target/*.jar app.jar
+#17 CACHED
+
+#18 exporting to image
+#18 exporting layers 0.0s done
+#18 exporting manifest sha256:a25c617d128b8e6dd09c198993985654d55da1eaf5f9736027847b69c2c71ae6 done
+#18 exporting config sha256:644e32aa2791e1cbd47f18d243426e39f73e59e3bbf3b67a9e092561ef27a828 0.0s done
+#18 exporting attestation manifest sha256:370dcd5643f617457f59cc32ad0eab5c7afa0b8e91b20f31a031e5c0fba776c7 0.0s done
+#18 exporting manifest list sha256:82f1915ae0e28500dbd651ef24c4cc163aaf8e2f976a03744e72111fe65515d1
+#18 exporting manifest list sha256:82f1915ae0e28500dbd651ef24c4cc163aaf8e2f976a03744e72111fe65515d1 0.0s done
+#18 naming to docker.io/library/matterly-backend:latest done
+#18 unpacking to docker.io/library/matterly-backend:latest 0.0s done
+#18 DONE 0.2s
+-- loading into minikube
+configmap/backend-config unchanged
+deployment.apps/backend unchanged
+service/backend unchanged
+-- rolling backend deployment
+deployment.apps/backend restarted
+Waiting for deployment "backend" rollout to finish: 0 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment spec update to be observed...
+Waiting for deployment spec update to be observed...
+Waiting for deployment "backend" rollout to finish: 0 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 0 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 0 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+deployment "backend" successfully rolled out
+#12 CACHED
+
+#13 [build 6/7] COPY src ./src
+#13 CACHED
+
+#14 [build 4/7] COPY mvnw pom.xml ./
+#14 CACHED
+
+#15 [build 7/7] RUN ./mvnw -B clean package -DskipTests
+#15 CACHED
+
+#16 [runtime 4/4] COPY --from=build /app/target/*.jar app.jar
+#16 CACHED
+
+#17 exporting to image
+#17 exporting layers done
+#17 exporting manifest sha256:a25c617d128b8e6dd09c198993985654d55da1eaf5f9736027847b69c2c71ae6 done
+#17 exporting config sha256:644e32aa2791e1cbd47f18d243426e39f73e59e3bbf3b67a9e092561ef27a828 done
+#17 exporting attestation manifest sha256:ca27a1f4af6d59edf752c437408020e6f2f104bc125d6867aa8fe69b26b28e65 0.0s done
+#17 exporting manifest list sha256:78eb7d3b5198632d0e3e2671dfc0de21a1404bc68cd676a9511ff287cf920ff6
+#17 exporting manifest list sha256:78eb7d3b5198632d0e3e2671dfc0de21a1404bc68cd676a9511ff287cf920ff6 0.0s done
+#17 naming to docker.io/library/matterly-backend:latest done
+#17 unpacking to docker.io/library/matterly-backend:latest 0.0s done
+#17 DONE 0.2s
+-- loading into minikube
+configmap/backend-config unchanged
+deployment.apps/backend unchanged
+service/backend unchanged
+-- rolling backend deployment
+deployment.apps/backend restarted
+Waiting for deployment "backend" rollout to finish: 0 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 0 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+deployment "backend" successfully rolled out
+-- building frontend image
+-- building frontend image
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 697B 0.0s done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/node:20-alpine
+#2 DONE 1.7s
+
+#3 [internal] load metadata for docker.io/library/nginx:1.27-alpine
+#3 DONE 1.7s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 72B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 3.13kB 0.0s done
+#5 DONE 0.0s
+
+#6 [runtime 1/3] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#6 resolve docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10 0.0s done
+#6 DONE 0.1s
+
+#7 [build 1/6] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f60937#7 DONE 0.1s
+
+#8 [build 1/6] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+#8 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 0.0s done
+#8 DONE 0.1s
+
+#9 [internal] load build context
+#9 transferring context: 820.92kB 0.1s done
+#9 DONE 0.2s
+
+#10 [runtime 3/3] COPY nginx.conf /etc/nginx/conf.d/default.conf
+#10 CACHED
+
+#11 exporting to image
+#11 exporting layers done
+#11 exporting manifest sha256:b8e279c2f6db392415d4ce34468a4df47ea73a4f159069284917a7519f0ca363 done
+#11 exporting config sha256:c92c849b6c832dcd76851d68c218923b6fc6ae603792d4fae2ac011f5db8222a done
+#11 exporting attestation manifest sha256:bcec3225d276b01cae32626d6fecfcb816a081d01464484e979d3c872530ae2f 0.0s done
+#11 exporting manifest list sha256:89c0548c5b98da2efc6cd58170cccfc03afb7e1ff#15 exporting attestation manifest sha256:a90c23d246e7b849b2473bd1582b2c9edff0dfb28e5ff3f6a#11 naming to docker.io/library/matterly-frontend:latest done
+#11 unpacking to docker.io/library/matterly-frontend:latest 0.0s done
+#11 DONE 0.2s
+ to docker.io/library/matterly-frontend:latest done
+#15 unpacking to docker.io/library/matterly-frontend:latest 0.0s done
+#15 DONE 0.2s
+-- loading into minikube
+-- loading into minikube
+deployment.apps/frontend unchanged
+service/frontend unchanged
+-- rolling frontend deployment
+deployment.apps/frontend restarted
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment spec update to be observed...
+Waiting for deployment spec update to be observed...
+Waiting for deploymentWaiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+deployment "frontend" successfully rolled out
+replicas are pending termination...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+deployment "frontend" successfully rolled out
+===== deploy pipeline finished Sat, Jul 25, 2026  9:49:35 PM — SUCCESS =====
+===== deploy pipeline finished Sat Jul 25 21:49:35 IST 2026 — SUCCESS =====
+
+===== deploy pipeline started Sat Jul 25 21:52:11 IST 2026 — target=both =====
+namespace/matterly unchanged
+persistentvolumeclaim/mysql-pvc unchanged
+deployment.apps/mysql unchanged
+service/mysql unchanged
+-- building backend image
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 794B 0.0s done
+#1 DONE 0.0s
+
+#2 [auth] library/eclipse-temurin:pull token for registry-1.docker.io
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/eclipse-temurin:21-jre
+#3 ...
+
+#4 [internal] load metadata for docker.io/library/eclipse-temurin:21-jdk
+#4 DONE 1.4s
+
+#3 [internal] load metadata for docker.io/library/eclipse-temurin:21-jre
+#3 DONE 1.4s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 82B done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 DONE 0.0s
+
+#7 [runtime 1/4] FROM docker.io/library/eclipse-temurin:21-jre@sha256:273396ed5998598ed1091e8d72711c2d36980a0e65103859c55a4e977a41ffd3
+#7 resolve docker.io/library/eclipse-temurin:21-jre@sha256:273396ed5998598ed1091e8d72711c2d36980a0e65103859c55a4e977a41ffd3 0.0s done
+#7 DONE 0.0s
+
+#8 [build 1/7] FROM docker.io/library/eclipse-temurin:21-jdk@sha256:da9d3a4f7650db39b918fc5a2c3da76556fb8cc8e5f3767cdea0bb409286951a
+#8 resolve docker.io/library/eclipse-temurin:21-jdk@sha256:da9d3a4f7650db39b918fc5a2c3da76556fb8cc8e5f3767cdea0bb409286951a 0.0s done
+#8 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 7.21kB 0.0s done
+#6 DONE 0.0s
+
+#9 [runtime 3/4] RUN addgroup --system spring && adduser --system --ingroup spring spring
+#9 CACHED
+
+#10 [build 6/7] COPY src ./src
+#10 CACHED
+
+#11 [build 2/7] WORKDIR /app
+#11 CACHED
+
+#12 [build 5/7] RUN chmod +x mvnw && ./mvnw -B dependency:go-offline
+#12 CACHED
+
+#13 [build 7/7] RUN ./mvnw -B clean package -DskipTests
+#13 CACHED
+
+#14 [runtime 2/4] WORKDIR /app
+#14 CACHED
+
+#15 [build 3/7] COPY .mvn/ .mvn/
+#15 CACHED
+
+#16 [build 4/7] COPY mvnw pom.xml ./
+#16 CACHED
+
+#17 [runtime 4/4] COPY --from=build /app/target/*.jar app.jar
+#17 CACHED
+
+#18 exporting to image
+#18 exporting layers done
+#18 exporting manifest sha256:a25c617d128b8e6dd09c198993985654d55da1eaf5f9736027847b69c2c71ae6 done
+#18 exporting config sha256:644e32aa2791e1cbd47f18d243426e39f73e59e3bbf3b67a9e092561ef27a828 done
+#18 exporting attestation manifest sha256:0a80c8e7f753282acfdf02b60164143aa1b14253c874f32fcb92e57a9c5a5142 0.0s done
+#18 exporting manifest list sha256:32f229d0c6807e7a12b82add268d6c120054620d89dac36f97dc70b5d143f4ed
+#18 exporting manifest list sha256:32f229d0c6807e7a12b82add268d6c120054620d89dac36f97dc70b5d143f4ed 0.0s done
+#18 naming to docker.io/library/matterly-backend:latest done
+#18 unpacking to docker.io/library/matterly-backend:latest 0.0s done
+#18 DONE 0.1s
+-- loading into minikube
+configmap/backend-config unchanged
+deployment.apps/backend unchanged
+service/backend unchanged
+-- rolling backend deployment
+deployment.apps/backend restarted
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+deployment "backend" successfully rolled out
+-- building frontend image
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 697B done
+#1 DONE 0.0s
+
+#2 [auth] library/nginx:pull token for registry-1.docker.io
+#2 DONE 0.0s
+
+#3 [auth] library/node:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#4 [internal] load metadata for docker.io/library/nginx:1.27-alpine
+#4 DONE 1.4s
+
+#5 [internal] load metadata for docker.io/library/node:20-alpine
+#5 DONE 1.5s
+
+#6 [internal] load .dockerignore
+#6 transferring context: 72B done
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 transferring context: 3.13kB 0.0s done
+#7 DONE 0.0s
+
+#8 [runtime 1/3] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#8 resolve docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10 0.0s done
+#8 DONE 0.0s
+
+#9 [build 1/6] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+#9 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 0.0s done
+#9 DONE 0.0s
+
+#10 [build 2/6] WORKDIR /app
+#10 CACHED
+
+#11 [build 3/6] COPY package.json package-lock.json ./
+#11 CACHED
+
+#12 [build 5/6] COPY . .
+#12 CACHED
+
+#13 [build 6/6] RUN npm run build
+#13 CACHED
+
+#14 [build 4/6] RUN npm ci
+#14 CACHED
+
+#15 [runtime 2/3] COPY --from=build /app/dist /usr/share/nginx/html
+#15 CACHED
+
+#16 [runtime 3/3] COPY nginx.conf /etc/nginx/conf.d/default.conf
+#16 CACHED
+
+#17 exporting to image
+#17 exporting layers done
+#17 exporting manifest sha256:b8e279c2f6db392415d4ce34468a4df47ea73a4f159069284917a7519f0ca363
+#17 exporting manifest sha256:b8e279c2f6db392415d4ce34468a4df47ea73a4f159069284917a7519f0ca363 done
+#17 exporting config sha256:c92c849b6c832dcd76851d68c218923b6fc6ae603792d4fae2ac011f5db8222a done
+#17 exporting attestation manifest sha256:6bbd5e39455df4b5313ecfc340243472ea76ea7f9d62a01e97c75bec013724a3 0.0s done
+#17 exporting manifest list sha256:ffeecd4d3507d6532c3a9c6d7369fc487fcda521fc66d1622ebbda55b826d34e 0.0s done
+#17 naming to docker.io/library/matterly-frontend:latest done
+#17 unpacking to docker.io/library/matterly-frontend:latest 0.0s done
+#17 DONE 0.1s
+-- loading into minikube
+deployment.apps/frontend unchanged
+service/frontend unchanged
+-- rolling frontend deployment
+deployment.apps/frontend restarted
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+deployment "frontend" successfully rolled out
+===== deploy pipeline finished Sat Jul 25 21:54:04 IST 2026 — SUCCESS =====
+
+===== deploy pipeline started Sat Jul 25 22:31:29 IST 2026 — target=both =====
+namespace/matterly unchanged
+persistentvolumeclaim/mysql-pvc unchanged
+deployment.apps/mysql unchanged
+service/mysql configured
+-- building backend image
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 794B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/eclipse-temurin:21-jre
+#2 ...
+
+#3 [auth] library/eclipse-temurin:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#4 [internal] load metadata for docker.io/library/eclipse-temurin:21-jdk
+#4 ...
+
+#2 [internal] load metadata for docker.io/library/eclipse-temurin:21-jre
+#2 DONE 1.8s
+
+#4 [internal] load metadata for docker.io/library/eclipse-temurin:21-jdk
+#4 DONE 1.8s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 82B done
+#5 DONE 0.0s
+
+#6 [build 1/7] FROM docker.io/library/eclipse-temurin:21-jdk@sha256:da9d3a4f7650db39b918fc5a2c3da76556fb8cc8e5f3767cdea0bb409286951a
+#6 resolve docker.io/library/eclipse-temurin:21-jdk@sha256:da9d3a4f7650db39b918fc5a2c3da76556fb8cc8e5f3767cdea0bb409286951a 0.0s done
+#6 DONE 0.0s
+
+#7 [runtime 1/4] FROM docker.io/library/eclipse-temurin:21-jre@sha256:273396ed5998598ed1091e8d72711c2d36980a0e65103859c55a4e977a41ffd3
+#7 resolve docker.io/library/eclipse-temurin:21-jre@sha256:273396ed5998598ed1091e8d72711c2d36980a0e65103859c55a4e977a41ffd3 0.0s done
+#7 DONE 0.0s
+
+#8 [internal] load build context
+#8 transferring context: 11.76kB 0.0s done
+#8 DONE 0.0s
+
+#9 [build 2/7] WORKDIR /app
+#9 CACHED
+
+#10 [build 3/7] COPY .mvn/ .mvn/
+#10 CACHED
+
+#11 [build 4/7] COPY mvnw pom.xml ./
+#11 CACHED
+
+#12 [build 5/7] RUN chmod +x mvnw && ./mvnw -B dependency:go-offline
+#12 CACHED
+
+#13 [build 6/7] COPY src ./src
+#13 DONE 0.1s
+
+#14 [build 7/7] RUN ./mvnw -B clean package -DskipTests
+#14 2.923 [INFO] Scanning for projects...
+#14 3.436 [INFO] 
+#14 3.436 [INFO] ----------------------< com.abhipsa.digital:law >-----------------------
+#14 3.436 [INFO] Building  0.0.1-SNAPSHOT
+#14 3.436 [INFO]   from pom.xml
+#14 3.436 [INFO] --------------------------------[ jar ]---------------------------------
+#14 4.558 [INFO] 
+#14 4.558 [INFO] --- clean:3.5.0:clean (default-clean) @ law ---
+#14 4.656 [INFO] 
+#14 4.656 [INFO] --- resources:3.5.0:resources (default-resources) @ law ---
+#14 4.828 [INFO] Copying 1 resource from src/main/resources to target/classes
+#14 4.855 [INFO] Copying 0 resource from src/main/resources to target/classes
+#14 4.857 [INFO] 
+#14 4.857 [INFO] --- compiler:3.15.0:compile (default-compile) @ law ---
+#14 5.143 [INFO] Recompiling the module because of changed source code.
+#14 5.161 [INFO] Compiling 68 source files with javac [debug parameters release 17] to target/classes
+#14 9.696 [INFO] Annotation processing is enabled because one or more processors were found
+#14 9.696   on the class path. A future release of javac may disable annotation processing
+#14 9.696   unless at least one processor is specified by name (-processor), or a search
+#14 9.696   path is specified (--processor-path, --processor-module-path), or annotation
+#14 9.696   processing is enabled explicitly (-proc:only, -proc:full).
+#14 9.696   Use -Xlint:-options to suppress this message.
+#14 9.696   Use -proc:none to disable annotation processing.
+#14 9.696 [INFO] /app/src/main/java/com/abhipsa/digital/law/config/AuditInterceptor.java: Some input files use or override a deprecated API.
+#14 9.696 [INFO] /app/src/main/java/com/abhipsa/digital/law/config/AuditInterceptor.java: Recompile with -Xlint:deprecation for details.
+#14 9.697 [INFO] 
+#14 9.697 [INFO] --- resources:3.5.0:testResources (default-testResources) @ law ---
+#14 9.708 [INFO] skip non existing resourceDirectory /app/src/test/resources
+#14 9.709 [INFO] 
+#14 9.709 [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ law ---
+#14 9.724 [INFO] Recompiling the module because of changed dependency.
+#14 9.727 [INFO] Compiling 1 source file with javac [debug parameters release 17] to target/test-classes
+#14 10.41 [INFO] Annotation processing is enabled because one or more processors were found
+#14 10.41   on the class path. A future release of javac may disable annotation processing
+#14 10.41   unless at least one processor is specified by name (-processor), or a search
+#14 10.41   path is specified (--processor-path, --processor-module-path), or annotation
+#14 10.41   processing is enabled explicitly (-proc:only, -proc:full).
+#14 10.41   Use -Xlint:-options to suppress this message.
+#14 10.41   Use -proc:none to disable annotation processing.
+#14 10.41 [INFO] 
+#14 10.41 [INFO] --- surefire:3.5.6:test (default-test) @ law ---
+#14 10.60 [INFO] Tests are skipped.
+#14 10.60 [INFO] 
+#14 10.60 [INFO] --- jar:3.5.0:jar (default-jar) @ law ---
+#14 11.11 [INFO] Building jar: /app/target/law-0.0.1-SNAPSHOT.jar
+#14 11.24 [INFO] 
+#14 11.24 [INFO] --- spring-boot:4.1.0:repackage (repackage) @ law ---
+#14 12.05 [INFO] Replacing main artifact /app/target/law-0.0.1-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+#14 12.05 [INFO] The original artifact has been renamed to /app/target/law-0.0.1-SNAPSHOT.jar.original
+#14 12.05 [INFO] ------------------------------------------------------------------------
+#14 12.05 [INFO] BUILD SUCCESS
+#14 12.05 [INFO] ------------------------------------------------------------------------
+#14 12.05 [INFO] Total time:  9.166 s
+#14 12.05 [INFO] Finished at: 2026-07-25T17:01:46Z
+#14 12.05 [INFO] ------------------------------------------------------------------------
+#14 DONE 12.2s
+
+#15 [runtime 2/4] WORKDIR /app
+#15 CACHED
+
+#16 [runtime 3/4] RUN addgroup --system spring && adduser --system --ingroup spring spring
+#16 CACHED
+
+#17 [runtime 4/4] COPY --from=build /app/target/*.jar app.jar
+#17 DONE 0.1s
+
+#18 exporting to image
+#18 exporting layers
+#18 exporting layers 3.0s done
+#18 exporting manifest sha256:5ef76629402243a4b925bd792d365d14b6224cb6098b3ab5f6138ba64d363b9b 0.0s done
+#18 exporting config sha256:3cb61fd3ca15f650c9469288b56a1a64f12a57f9c876b5c5e6397166669ac9c2 0.0s done
+#18 exporting attestation manifest sha256:7bfb4247cac422bf4c03c7fbca479b312c7259c39b18fd694e1dbdaa883b38c7 0.0s done
+#18 exporting manifest list sha256:247113a496357b6eef407351d9e7cb29b3ef8bc85190ece650e41cbb708d1905 0.0s done
+#18 naming to docker.io/library/matterly-backend:latest done
+#18 unpacking to docker.io/library/matterly-backend:latest
+#18 unpacking to docker.io/library/matterly-backend:latest 0.5s done
+#18 DONE 3.7s
+-- loading into minikube
+configmap/backend-config unchanged
+deployment.apps/backend unchanged
+service/backend unchanged
+-- rolling backend deployment
+deployment.apps/backend restarted
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+deployment "backend" successfully rolled out
+-- building frontend image
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 697B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/nginx:1.27-alpine
+#2 ...
+
+#3 [auth] library/nginx:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#4 [auth] library/node:pull token for registry-1.docker.io
+#4 DONE 0.0s
+
+#5 [internal] load metadata for docker.io/library/node:20-alpine
+#5 ...
+
+#2 [internal] load metadata for docker.io/library/nginx:1.27-alpine
+#2 DONE 1.7s
+
+#5 [internal] load metadata for docker.io/library/node:20-alpine
+#5 DONE 1.7s
+
+#6 [internal] load .dockerignore
+#6 transferring context: 72B done
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 transferring context: 297.37kB 0.0s done
+#7 DONE 0.1s
+
+#8 [build 1/6] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+#8 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 0.1s done
+#8 DONE 0.1s
+
+#9 [build 3/6] COPY package.json package-lock.json ./
+#9 CACHED
+
+#10 [build 2/6] WORKDIR /app
+#10 CACHED
+
+#11 [build 4/6] RUN npm ci
+#11 CACHED
+
+#12 [runtime 1/3] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#12 resolve docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10 0.1s done
+#12 DONE 0.1s
+
+#13 [build 5/6] COPY . .
+#13 DONE 0.1s
+
+#14 [build 6/6] RUN npm run build
+#14 1.038 
+#14 1.038 > lawyer-ui@0.0.0 build
+#14 1.038 > vite build
+#14 1.038 
+#14 1.541 vite v5.4.21 building for production...
+#14 1.637 transforming...
+#14 4.807 ✓ 131 modules transformed.
+#14 5.408 rendering chunks...
+#14 5.445 computing gzip size...
+#14 5.472 dist/index.html                              0.94 kB │ gzip:   0.46 kB
+#14 5.472 dist/assets/tabler-icons-DnZiL_sy.woff2    460.04 kB
+#14 5.472 dist/assets/tabler-icons-BWE4Tlyy.woff     790.63 kB
+#14 5.472 dist/assets/tabler-icons-DMRaotGC.ttf    2,824.36 kB
+#14 5.472 dist/assets/index-CqkCYTgv.css             204.08 kB │ gzip:  40.11 kB
+#14 5.472 dist/assets/index-vz6gxuYk.js              464.39 kB │ gzip: 114.14 kB
+#14 5.473 ✓ built in 3.88s
+#14 DONE 5.5s
+
+#12 [runtime 1/3] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#12 CACHED
+
+#15 [runtime 2/3] COPY --from=build /app/dist /usr/share/nginx/html
+#15 DONE 0.0s
+
+#16 [runtime 3/3] COPY nginx.conf /etc/nginx/conf.d/default.conf
+#16 DONE 0.0s
+
+#17 exporting to image
+#17 exporting layers
+#17 exporting layers 0.3s done
+#17 exporting manifest sha256:cb8f517ef7240b1b3fed900332d520b6655bdc994246b2f270f08d40c0adda52 0.0s done
+#17 exporting config sha256:31881ab0fb4c8908c6ac7e6138f198030e3ded6832ceb821caabc6265aa0078f 0.0s done
+#17 exporting attestation manifest sha256:0a6269403ccfe7c46c179f5a9302398ed8a173c2842905898af73d928d2bdea8 0.0s done
+#17 exporting manifest list sha256:2c51b9ccb2e394b974abb6b6275fc2586f71a510f2cd95c23e50a83cd9a0420c 0.0s done
+#17 naming to docker.io/library/matterly-frontend:latest done
+#17 unpacking to docker.io/library/matterly-frontend:latest 0.1s done
+#17 DONE 0.5s
+-- loading into minikube
+deployment.apps/frontend unchanged
+service/frontend unchanged
+-- rolling frontend deployment
+deployment.apps/frontend restarted
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+deployment "frontend" successfully rolled out
+===== deploy pipeline finished Sat Jul 25 22:33:50 IST 2026 — SUCCESS =====
+
+===== deploy pipeline started Sat Jul 25 22:37:27 IST 2026 — target=both =====
+namespace/matterly unchanged
+persistentvolumeclaim/mysql-pvc unchanged
+deployment.apps/mysql unchanged
+service/mysql unchanged
+-- building backend image
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 794B done
+#1 DONE 0.0s
+
+#2 [auth] library/eclipse-temurin:pull token for registry-1.docker.io
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/eclipse-temurin:21-jre
+#3 DONE 1.4s
+
+#4 [internal] load metadata for docker.io/library/eclipse-temurin:21-jdk
+#4 DONE 1.5s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 82B done
+#5 DONE 0.0s
+
+#6 [build 1/7] FROM docker.io/library/eclipse-temurin:21-jdk@sha256:da9d3a4f7650db39b918fc5a2c3da76556fb8cc8e5f3767cdea0bb409286951a
+#6 resolve docker.io/library/eclipse-temurin:21-jdk@sha256:da9d3a4f7650db39b918fc5a2c3da76556fb8cc8e5f3767cdea0bb409286951a 0.0s done
+#6 DONE 0.0s
+
+#7 [runtime 1/4] FROM docker.io/library/eclipse-temurin:21-jre@sha256:273396ed5998598ed1091e8d72711c2d36980a0e65103859c55a4e977a41ffd3
+#7 resolve docker.io/library/eclipse-temurin:21-jre@sha256:273396ed5998598ed1091e8d72711c2d36980a0e65103859c55a4e977a41ffd3 0.0s done
+#7 DONE 0.0s
+
+#8 [internal] load build context
+#8 transferring context: 7.29kB 0.0s done
+#8 DONE 0.0s
+
+#9 [build 6/7] COPY src ./src
+#9 CACHED
+
+#10 [runtime 3/4] RUN addgroup --system spring && adduser --system --ingroup spring spring
+#10 CACHED
+
+#11 [build 7/7] RUN ./mvnw -B clean package -DskipTests
+#11 CACHED
+
+#12 [build 5/7] RUN chmod +x mvnw && ./mvnw -B dependency:go-offline
+#12 CACHED
+
+#13 [runtime 2/4] WORKDIR /app
+#13 CACHED
+
+#14 [build 2/7] WORKDIR /app
+#14 CACHED
+
+#15 [build 3/7] COPY .mvn/ .mvn/
+#15 CACHED
+
+#16 [build 4/7] COPY mvnw pom.xml ./
+#16 CACHED
+
+#17 [runtime 4/4] COPY --from=build /app/target/*.jar app.jar
+#17 CACHED
+
+#18 exporting to image
+#18 exporting layers done
+#18 exporting manifest sha256:5ef76629402243a4b925bd792d365d14b6224cb6098b3ab5f6138ba64d363b9b done
+#18 exporting config sha256:3cb61fd3ca15f650c9469288b56a1a64f12a57f9c876b5c5e6397166669ac9c2 done
+#18 exporting attestation manifest sha256:e33211c4de1b1be54e2fc8b5786ee4bfe692ff89c99edd79b72d3ee81fe4e6c1 0.0s done
+#18 exporting manifest list sha256:873d131e78bba68b28d4bb9475481a820370091071b2bd7fc4f7ad3ea1309f4c 0.0s done
+#18 naming to docker.io/library/matterly-backend:latest done
+#18 unpacking to docker.io/library/matterly-backend:latest 0.0s done
+#18 DONE 0.1s
+-- loading into minikube
+configmap/backend-config unchanged
+deployment.apps/backend unchanged
+service/backend unchanged
+-- rolling backend deployment
+deployment.apps/backend restarted
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+deployment "backend" successfully rolled out
+-- building frontend image
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 697B done
+#1 DONE 0.0s
+
+#2 [auth] library/node:pull token for registry-1.docker.io
+#2 DONE 0.0s
+
+#3 [auth] library/nginx:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#4 [internal] load metadata for docker.io/library/node:20-alpine
+#4 ...
+
+#5 [internal] load metadata for docker.io/library/nginx:1.27-alpine
+#5 DONE 1.4s
+
+#4 [internal] load metadata for docker.io/library/node:20-alpine
+#4 DONE 1.4s
+
+#6 [internal] load .dockerignore
+#6 transferring context: 72B done
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 transferring context: 3.13kB 0.0s done
+#7 DONE 0.0s
+
+#8 [runtime 1/3] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#8 resolve docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10 0.1s done
+#8 DONE 0.1s
+
+#9 [build 1/6] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+#9 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 0.1s done
+#9 DONE 0.1s
+
+#10 [runtime 2/3] COPY --from=build /app/dist /usr/share/nginx/html
+#10 CACHED
+
+#11 [build 2/6] WORKDIR /app
+#11 CACHED
+
+#12 [build 3/6] COPY package.json package-lock.json ./
+#12 CACHED
+
+#13 [build 5/6] COPY . .
+#13 CACHED
+
+#14 [build 4/6] RUN npm ci
+#14 CACHED
+
+#15 [build 6/6] RUN npm run build
+#15 CACHED
+
+#16 [runtime 3/3] COPY nginx.conf /etc/nginx/conf.d/default.conf
+#16 CACHED
+
+#17 exporting to image
+#17 exporting layers done
+#17 exporting manifest sha256:cb8f517ef7240b1b3fed900332d520b6655bdc994246b2f270f08d40c0adda52 done
+#17 exporting config sha256:31881ab0fb4c8908c6ac7e6138f198030e3ded6832ceb821caabc6265aa0078f done
+#17 exporting attestation manifest sha256:cccc58c459639062b1822b8e5fc8b68ff80e0c22d509c402c0990e1d23f8c273
+#17 exporting attestation manifest sha256:cccc58c459639062b1822b8e5fc8b68ff80e0c22d509c402c0990e1d23f8c273 0.0s done
+#17 exporting manifest list sha256:55050cf3a0c3fdcdfee41cc5476aa57fb963f1ae9e6a59d74ba290e3ad7c9e6a 0.0s done
+#17 naming to docker.io/library/matterly-frontend:latest done
+#17 unpacking to docker.io/library/matterly-frontend:latest 0.0s done
+#17 DONE 0.2s
+-- loading into minikube
+deployment.apps/frontend unchanged
+service/frontend unchanged
+-- rolling frontend deployment
+deployment.apps/frontend restarted
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+deployment "frontend" successfully rolled out
+===== deploy pipeline finished Sat Jul 25 22:39:24 IST 2026 — SUCCESS =====
+
+===== deploy pipeline started Sat, Jul 25, 2026 10:57:53 PM — target=frontend =====
+namespace/matterly unchanged
+persistentvolumeclaim/mysql-pvc unchanged
+deployment.apps/mysql unchanged
+service/mysql unchanged
+-- building frontend image
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 697B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:20-alpine
+#2 ...
+
+#3 [auth] library/node:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#4 [auth] library/nginx:pull token for registry-1.docker.io
+#4 DONE 0.0s
+
+#5 [internal] load metadata for docker.io/library/nginx:1.27-alpine
+#5 DONE 1.7s
+
+#2 [internal] load metadata for docker.io/library/node:20-alpine
+#2 DONE 1.7s
+
+#6 [internal] load .dockerignore
+#6 transferring context: 72B done
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 transferring context: 7.29kB 0.0s done
+#7 DONE 0.0s
+
+#8 [runtime 1/3] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#8 resolve docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10 0.0s done
+#8 DONE 0.1s
+
+#9 [build 1/6] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+#9 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 0.0s done
+#9 DONE 0.1s
+
+#10 [build 2/6] WORKDIR /app
+#10 CACHED
+
+#11 [build 3/6] COPY package.json package-lock.json ./
+#11 CACHED
+
+#12 [build 4/6] RUN npm ci
+#12 CACHED
+
+#13 [build 5/6] COPY . .
+#13 DONE 0.0s
+
+#14 [build 6/6] RUN npm run build
+#14 0.488 
+#14 0.488 > lawyer-ui@0.0.0 build
+#14 0.488 > vite build
+#14 0.488 
+#14 0.860 vite v5.4.21 building for production...
+#14 0.953 transforming...
+#14 3.430 ✓ 131 modules transformed.
+#14 3.872 rendering chunks...
+#14 3.899 computing gzip size...
+#14 3.920 dist/index.html                              0.94 kB │ gzip:   0.46 kB
+#14 3.920 dist/assets/tabler-icons-DnZiL_sy.woff2    460.04 kB
+#14 3.920 dist/assets/tabler-icons-BWE4Tlyy.woff     790.63 kB
+#14 3.921 dist/assets/tabler-icons-DMRaotGC.ttf    2,824.36 kB
+#14 3.921 dist/assets/index-CqkCYTgv.css             204.08 kB │ gzip:  40.11 kB
+#14 3.921 dist/assets/index-DAUiES9V.js              464.46 kB │ gzip: 114.16 kB
+#14 3.922 ✓ built in 3.02s
+#14 DONE 4.0s
+
+#8 [runtime 1/3] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#8 CACHED
+
+#15 [runtime 2/3] COPY --from=build /app/dist /usr/share/nginx/html
+#15 DONE 0.1s
+
+#16 [runtime 3/3] COPY nginx.conf /etc/nginx/conf.d/default.conf
+#16 DONE 0.0s
+
+#17 exporting to image
+#17 exporting layers
+#17 exporting layers 0.3s done
+#17 exporting manifest sha256:c9c2c1a8fb6b52a8d210e9ae140e9bf1846c95233dad2da37f18964f63b0dda2 0.0s done
+#17 exporting config sha256:65cbcf9ab2b0adfc3bd3d98cd82f5d0216be1ae11e2a2fa49df5bee5bf957dff 0.0s done
+#17 exporting attestation manifest sha256:86f824b564ec42d20a569ef02e0363453783acd4c91f18525d1fd38aea959c53 0.0s done
+#17 exporting manifest list sha256:57b3a42db64560e71ad164055ffcce0abadd7a3059936d0503543647699d902a 0.0s done
+#17 naming to docker.io/library/matterly-frontend:latest
+#17 naming to docker.io/library/matterly-frontend:latest done
+#17 unpacking to docker.io/library/matterly-frontend:latest 0.1s done
+#17 DONE 0.6s
+-- loading into minikube
+deployment.apps/frontend unchanged
+service/frontend unchanged
+-- rolling frontend deployment
+deployment.apps/frontend restarted
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+deployment "frontend" successfully rolled out
+===== deploy pipeline finished Sat, Jul 25, 2026 10:58:33 PM — SUCCESS =====
+
+===== deploy pipeline started Sat Jul 25 23:07:36 IST 2026 — target=both =====
+namespace/matterly unchanged
+persistentvolumeclaim/mysql-pvc unchanged
+deployment.apps/mysql unchanged
+service/mysql unchanged
+-- building backend image
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 794B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/eclipse-temurin:21-jre
+#2 ...
+
+#3 [auth] library/eclipse-temurin:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#4 [internal] load metadata for docker.io/library/eclipse-temurin:21-jdk
+#4 ...
+
+#2 [internal] load metadata for docker.io/library/eclipse-temurin:21-jre
+#2 DONE 1.7s
+
+#4 [internal] load metadata for docker.io/library/eclipse-temurin:21-jdk
+#4 DONE 1.7s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 82B done
+#5 DONE 0.0s
+
+#6 [build 1/7] FROM docker.io/library/eclipse-temurin:21-jdk@sha256:da9d3a4f7650db39b918fc5a2c3da76556fb8cc8e5f3767cdea0bb409286951a
+#6 resolve docker.io/library/eclipse-temurin:21-jdk@sha256:da9d3a4f7650db39b918fc5a2c3da76556fb8cc8e5f3767cdea0bb409286951a 0.0s done
+#6 DONE 0.0s
+
+#7 [runtime 1/4] FROM docker.io/library/eclipse-temurin:21-jre@sha256:273396ed5998598ed1091e8d72711c2d36980a0e65103859c55a4e977a41ffd3
+#7 resolve docker.io/library/eclipse-temurin:21-jre@sha256:273396ed5998598ed1091e8d72711c2d36980a0e65103859c55a4e977a41ffd3 0.0s done
+#7 DONE 0.0s
+
+#8 [internal] load build context
+#8 transferring context: 29.53kB 0.0s done
+#8 DONE 0.0s
+
+#9 [build 2/7] WORKDIR /app
+#9 CACHED
+
+#10 [build 3/7] COPY .mvn/ .mvn/
+#10 CACHED
+
+#11 [build 4/7] COPY mvnw pom.xml ./
+#11 CACHED
+
+#12 [build 5/7] RUN chmod +x mvnw && ./mvnw -B dependency:go-offline
+#12 CACHED
+
+#13 [build 6/7] COPY src ./src
+#13 DONE 0.0s
+
+#14 [build 7/7] RUN ./mvnw -B clean package -DskipTests
+#14 2.319 [INFO] Scanning for projects...
+#14 2.733 [INFO] 
+#14 2.734 [INFO] ----------------------< com.abhipsa.digital:law >-----------------------
+#14 2.734 [INFO] Building  0.0.1-SNAPSHOT
+#14 2.734 [INFO]   from pom.xml
+#14 2.734 [INFO] --------------------------------[ jar ]---------------------------------
+#14 3.566 [INFO] 
+#14 3.566 [INFO] --- clean:3.5.0:clean (default-clean) @ law ---
+#14 3.660 [INFO] 
+#14 3.660 [INFO] --- resources:3.5.0:resources (default-resources) @ law ---
+#14 3.800 [INFO] Copying 1 resource from src/main/resources to target/classes
+#14 3.818 [INFO] Copying 0 resource from src/main/resources to target/classes
+#14 3.821 [INFO] 
+#14 3.821 [INFO] --- compiler:3.15.0:compile (default-compile) @ law ---
+#14 4.142 [INFO] Recompiling the module because of changed source code.
+#14 4.158 [INFO] Compiling 68 source files with javac [debug parameters release 17] to target/classes
+#14 8.568 [INFO] Annotation processing is enabled because one or more processors were found
+#14 8.568   on the class path. A future release of javac may disable annotation processing
+#14 8.568   unless at least one processor is specified by name (-processor), or a search
+#14 8.568   path is specified (--processor-path, --processor-module-path), or annotation
+#14 8.568   processing is enabled explicitly (-proc:only, -proc:full).
+#14 8.568   Use -Xlint:-options to suppress this message.
+#14 8.568   Use -proc:none to disable annotation processing.
+#14 8.568 [INFO] /app/src/main/java/com/abhipsa/digital/law/config/AuditInterceptor.java: Some input files use or override a deprecated API.
+#14 8.568 [INFO] /app/src/main/java/com/abhipsa/digital/law/config/AuditInterceptor.java: Recompile with -Xlint:deprecation for details.
+#14 8.570 [INFO] 
+#14 8.570 [INFO] --- resources:3.5.0:testResources (default-testResources) @ law ---
+#14 8.580 [INFO] skip non existing resourceDirectory /app/src/test/resources
+#14 8.581 [INFO] 
+#14 8.581 [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ law ---
+#14 8.595 [INFO] Recompiling the module because of changed dependency.
+#14 8.598 [INFO] Compiling 1 source file with javac [debug parameters release 17] to target/test-classes
+#14 9.213 [INFO] Annotation processing is enabled because one or more processors were found
+#14 9.213   on the class path. A future release of javac may disable annotation processing
+#14 9.213   unless at least one processor is specified by name (-processor), or a search
+#14 9.213   path is specified (--processor-path, --processor-module-path), or annotation
+#14 9.213   processing is enabled explicitly (-proc:only, -proc:full).
+#14 9.213   Use -Xlint:-options to suppress this message.
+#14 9.213   Use -proc:none to disable annotation processing.
+#14 9.214 [INFO] 
+#14 9.214 [INFO] --- surefire:3.5.6:test (default-test) @ law ---
+#14 9.388 [INFO] Tests are skipped.
+#14 9.389 [INFO] 
+#14 9.389 [INFO] --- jar:3.5.0:jar (default-jar) @ law ---
+#14 9.846 [INFO] Building jar: /app/target/law-0.0.1-SNAPSHOT.jar
+#14 9.940 [INFO] 
+#14 9.940 [INFO] --- spring-boot:4.1.0:repackage (repackage) @ law ---
+#14 10.82 [INFO] Replacing main artifact /app/target/law-0.0.1-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+#14 10.82 [INFO] The original artifact has been renamed to /app/target/law-0.0.1-SNAPSHOT.jar.original
+#14 10.82 [INFO] ------------------------------------------------------------------------
+#14 10.82 [INFO] BUILD SUCCESS
+#14 10.82 [INFO] ------------------------------------------------------------------------
+#14 10.83 [INFO] Total time:  8.535 s
+#14 10.83 [INFO] Finished at: 2026-07-25T17:37:51Z
+#14 10.83 [INFO] ------------------------------------------------------------------------
+#14 DONE 11.0s
+
+#15 [runtime 2/4] WORKDIR /app
+#15 CACHED
+
+#16 [runtime 3/4] RUN addgroup --system spring && adduser --system --ingroup spring spring
+#16 CACHED
+
+#17 [runtime 4/4] COPY --from=build /app/target/*.jar app.jar
+#17 DONE 0.1s
+
+#18 exporting to image
+#18 exporting layers
+#18 exporting layers 3.2s done
+#18 exporting manifest sha256:012ab47f1ec124e2200352bbe5f1bcd838e8a91983f19aeef10b39b039632809 0.0s done
+#18 exporting config sha256:43ffea0581ab50e7adde06cf324bdaf0a0aa9c91f0c38dad27321a177ee1f713 0.0s done
+#18 exporting attestation manifest sha256:2e9d9d7d3a06da0f5f65fa1c770b14ea79be03849f8ef7ec7963a5a96bb15e0a 0.0s done
+#18 exporting manifest list sha256:91e1b11ca1aa7974f6f51a39041f926404614aa00160c03711fbf5470f3ff1ce 0.0s done
+#18 naming to docker.io/library/matterly-backend:latest done
+#18 unpacking to docker.io/library/matterly-backend:latest
+#18 unpacking to docker.io/library/matterly-backend:latest 0.8s done
+#18 DONE 4.2s
+-- loading into minikube
+configmap/backend-config unchanged
+deployment.apps/backend unchanged
+service/backend unchanged
+-- rolling backend deployment
+deployment.apps/backend restarted
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+deployment "backend" successfully rolled out
+-- building frontend image
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 697B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:20-alpine
+#2 ...
+
+#3 [auth] library/nginx:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#4 [auth] library/node:pull token for registry-1.docker.io
+#4 DONE 0.0s
+
+#5 [internal] load metadata for docker.io/library/nginx:1.27-alpine
+#5 ...
+
+#2 [internal] load metadata for docker.io/library/node:20-alpine
+#2 DONE 1.6s
+
+#5 [internal] load metadata for docker.io/library/nginx:1.27-alpine
+#5 DONE 1.6s
+
+#6 [internal] load .dockerignore
+#6 transferring context: 72B done
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 transferring context: 26.66kB 0.0s done
+#7 DONE 0.0s
+
+#8 [build 1/6] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+#8 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 0.0s done
+#8 DONE 0.0s
+
+#9 [runtime 1/3] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#9 resolve docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10 0.0s done
+#9 DONE 0.0s
+
+#10 [build 3/6] COPY package.json package-lock.json ./
+#10 CACHED
+
+#11 [build 2/6] WORKDIR /app
+#11 CACHED
+
+#12 [build 4/6] RUN npm ci
+#12 CACHED
+
+#13 [build 5/6] COPY . .
+#13 DONE 0.0s
+
+#14 [build 6/6] RUN npm run build
+#14 0.465 
+#14 0.465 > lawyer-ui@0.0.0 build
+#14 0.465 > vite build
+#14 0.465 
+#14 0.799 vite v5.4.21 building for production...
+#14 0.884 transforming...
+#14 3.286 ✓ 131 modules transformed.
+#14 3.683 rendering chunks...
+#14 3.701 computing gzip size...
+#14 3.723 dist/index.html                              0.94 kB │ gzip:   0.46 kB
+#14 3.723 dist/assets/tabler-icons-DnZiL_sy.woff2    460.04 kB
+#14 3.723 dist/assets/tabler-icons-BWE4Tlyy.woff     790.63 kB
+#14 3.723 dist/assets/tabler-icons-DMRaotGC.ttf    2,824.36 kB
+#14 3.723 dist/assets/index-CqkCYTgv.css             204.08 kB │ gzip:  40.11 kB
+#14 3.723 dist/assets/index-CDVSp0z6.js              464.72 kB │ gzip: 114.21 kB
+#14 3.724 ✓ built in 2.88s
+#14 DONE 3.8s
+
+#9 [runtime 1/3] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#9 CACHED
+
+#15 [runtime 2/3] COPY --from=build /app/dist /usr/share/nginx/html
+#15 DONE 0.1s
+
+#16 [runtime 3/3] COPY nginx.conf /etc/nginx/conf.d/default.conf
+#16 DONE 0.0s
+
+#17 exporting to image
+#17 exporting layers
+#17 exporting layers 0.3s done
+#17 exporting manifest sha256:073b93d057cca2b78175d837bac15918b13b4f4016efd91024b8b9f1fcfb6d7b 0.0s done
+#17 exporting config sha256:cdfb505d7ec9c2f2d1b461513d6db7ced07ab9b389e95f9e70666be3f18ad462 0.0s done
+#17 exporting attestation manifest sha256:2d0521b62f037d7446d69b96b5b40fba1862b9fb8a5d2a12987e2a2b899cd7b6 0.0s done
+#17 exporting manifest list sha256:4122e6747f6d2805aaaf25b22912b9b0810baba5fca37b1613cf7157e59520e0 0.0s done
+#17 naming to docker.io/library/matterly-frontend:latest done
+#17 unpacking to docker.io/library/matterly-frontend:latest 0.1s done
+#17 DONE 0.5s
+-- loading into minikube
+deployment.apps/frontend unchanged
+service/frontend unchanged
+-- rolling frontend deployment
+deployment.apps/frontend restarted
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+deployment "frontend" successfully rolled out
+===== deploy pipeline finished Sat Jul 25 23:09:51 IST 2026 — SUCCESS =====
+
+===== deploy pipeline started Sat Jul 25 23:10:45 IST 2026 — target=both =====
+namespace/matterly unchanged
+persistentvolumeclaim/mysql-pvc unchanged
+deployment.apps/mysql unchanged
+service/mysql unchanged
+-- building backend image
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 794B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/eclipse-temurin:21-jdk
+#2 ...
+
+#3 [internal] load metadata for docker.io/library/eclipse-temurin:21-jre
+#3 DONE 1.0s
+
+#2 [internal] load metadata for docker.io/library/eclipse-temurin:21-jdk
+#2 DONE 1.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 82B done
+#4 DONE 0.0s
+
+#5 [runtime 1/4] FROM docker.io/library/eclipse-temurin:21-jre@sha256:273396ed5998598ed1091e8d72711c2d36980a0e65103859c55a4e977a41ffd3
+#5 resolve docker.io/library/eclipse-temurin:21-jre@sha256:273396ed5998598ed1091e8d72711c2d36980a0e65103859c55a4e977a41ffd3 0.0s done
+#5 DONE 0.1s
+
+#6 [build 1/7] FROM docker.io/library/eclipse-temurin:21-jdk@sha256:da9d3a4f7650db39b918fc5a2c3da76556fb8cc8e5f3767cdea0bb409286951a
+#6 resolve docker.io/library/eclipse-temurin:21-jdk@sha256:da9d3a4f7650db39b918fc5a2c3da76556fb8cc8e5f3767cdea0bb409286951a 0.0s done
+#6 DONE 0.1s
+
+#7 [internal] load build context
+#7 transferring context: 7.29kB 0.0s done
+#7 DONE 0.0s
+
+#8 [runtime 3/4] RUN addgroup --system spring && adduser --system --ingroup spring spring
+#8 CACHED
+
+#9 [build 3/7] COPY .mvn/ .mvn/
+#9 CACHED
+
+#10 [build 5/7] RUN chmod +x mvnw && ./mvnw -B dependency:go-offline
+#10 CACHED
+
+#11 [build 6/7] COPY src ./src
+#11 CACHED
+
+#12 [runtime 2/4] WORKDIR /app
+#12 CACHED
+
+#13 [build 2/7] WORKDIR /app
+#13 CACHED
+
+#14 [build 7/7] RUN ./mvnw -B clean package -DskipTests
+#14 CACHED
+
+#15 [build 4/7] COPY mvnw pom.xml ./
+#15 CACHED
+
+#16 [runtime 4/4] COPY --from=build /app/target/*.jar app.jar
+#16 CACHED
+
+#17 exporting to image
+#17 exporting layers done
+#17 exporting manifest sha256:012ab47f1ec124e2200352bbe5f1bcd838e8a91983f19aeef10b39b039632809 done
+#17 exporting config sha256:43ffea0581ab50e7adde06cf324bdaf0a0aa9c91f0c38dad27321a177ee1f713 done
+#17 exporting attestation manifest sha256:3048a289633694de84eff793f3efa6b0ac98a0add78c5bcbc11fc5ca01017b4d 0.0s done
+#17 exporting manifest list sha256:f7c7e9de72e328fb586c149306954c08b713dbcfa7ab82add224415a679184e7
+#17 exporting manifest list sha256:f7c7e9de72e328fb586c149306954c08b713dbcfa7ab82add224415a679184e7 0.0s done
+#17 naming to docker.io/library/matterly-backend:latest done
+#17 unpacking to docker.io/library/matterly-backend:latest 0.0s done
+#17 DONE 0.2s
+-- loading into minikube
+configmap/backend-config unchanged
+deployment.apps/backend unchanged
+service/backend unchanged
+-- rolling backend deployment
+deployment.apps/backend restarted
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+deployment "backend" successfully rolled out
+-- building frontend image
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 697B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/nginx:1.27-alpine
+#2 DONE 1.0s
+
+#3 [internal] load metadata for docker.io/library/node:20-alpine
+#3 DONE 1.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 72B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 3.13kB 0.0s done
+#5 DONE 0.0s
+
+#6 [runtime 1/3] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#6 resolve docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10 0.0s done
+#6 DONE 0.1s
+
+#7 [build 1/6] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+#7 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 0.0s done
+#7 DONE 0.1s
+
+#8 [build 4/6] RUN npm ci
+#8 CACHED
+
+#9 [build 5/6] COPY . .
+#9 CACHED
+
+#10 [runtime 2/3] COPY --from=build /app/dist /usr/share/nginx/html
+#10 CACHED
+
+#11 [build 3/6] COPY package.json package-lock.json ./
+#11 CACHED
+
+#12 [build 6/6] RUN npm run build
+#12 CACHED
+
+#13 [build 2/6] WORKDIR /app
+#13 CACHED
+
+#14 [runtime 3/3] COPY nginx.conf /etc/nginx/conf.d/default.conf
+#14 CACHED
+
+#15 exporting to image
+#15 exporting layers done
+#15 exporting manifest sha256:073b93d057cca2b78175d837bac15918b13b4f4016efd91024b8b9f1fcfb6d7b done
+#15 exporting config sha256:cdfb505d7ec9c2f2d1b461513d6db7ced07ab9b389e95f9e70666be3f18ad462 done
+#15 exporting attestation manifest sha256:c8f6f227e72e31af1f28de0a5668498f4b380f43380072dae4e62a839177c9cf 0.0s done
+#15 exporting manifest list sha256:aa0301b434377fa14a82993dc2c4a26700f366e164cdccdb4f9c42e5c0d80665 0.0s done
+#15 naming to docker.io/library/matterly-frontend:latest done
+#15 unpacking to docker.io/library/matterly-frontend:latest 0.0s done
+#15 DONE 0.2s
+-- loading into minikube
+deployment.apps/frontend unchanged
+service/frontend unchanged
+-- rolling frontend deployment
+deployment.apps/frontend restarted
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+deployment "frontend" successfully rolled out
+===== deploy pipeline finished Sat Jul 25 23:12:42 IST 2026 — SUCCESS =====
+
+===== deploy pipeline started Sun Jul 26 10:38:55 IST 2026 — target=both =====
+namespace/matterly unchanged
+persistentvolumeclaim/mysql-pvc unchanged
+deployment.apps/mysql unchanged
+service/mysql unchanged
+-- building backend image (tag: build-20260726103857)
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 794B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/eclipse-temurin:21-jdk
+#2 ...
+
+#3 [auth] library/eclipse-temurin:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#4 [internal] load metadata for docker.io/library/eclipse-temurin:21-jre
+#4 ...
+
+#2 [internal] load metadata for docker.io/library/eclipse-temurin:21-jdk
+#2 DONE 3.2s
+
+#4 [internal] load metadata for docker.io/library/eclipse-temurin:21-jre
+#4 DONE 3.2s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 82B done
+#5 DONE 0.0s
+
+#6 [runtime 1/4] FROM docker.io/library/eclipse-temurin:21-jre@sha256:273396ed5998598ed1091e8d72711c2d36980a0e65103859c55a4e977a41ffd3
+#6 resolve docker.io/library/eclipse-temurin:21-jre@sha256:273396ed5998598ed1091e8d72711c2d36980a0e65103859c55a4e977a41ffd3 0.0s done
+#6 DONE 0.0s
+
+#7 [build 1/7] FROM docker.io/library/eclipse-temurin:21-jdk@sha256:da9d3a4f7650db39b918fc5a2c3da76556fb8cc8e5f3767cdea0bb409286951a
+#7 resolve docker.io/library/eclipse-temurin:21-jdk@sha256:da9d3a4f7650db39b918fc5a2c3da76556fb8cc8e5f3767cdea0bb409286951a 0.0s done
+#7 DONE 0.0s
+
+#8 [internal] load build context
+#8 transferring context: 32.54kB 0.0s done
+#8 DONE 0.0s
+
+#9 [build 3/7] COPY .mvn/ .mvn/
+#9 CACHED
+
+#10 [build 4/7] COPY mvnw pom.xml ./
+#10 CACHED
+
+#11 [build 2/7] WORKDIR /app
+#11 CACHED
+
+#12 [build 5/7] RUN chmod +x mvnw && ./mvnw -B dependency:go-offline
+#12 CACHED
+
+#13 [build 6/7] COPY src ./src
+#13 DONE 0.1s
+
+#14 [build 7/7] RUN ./mvnw -B clean package -DskipTests
+#14 3.052 [INFO] Scanning for projects...
+#14 3.447 [INFO] 
+#14 3.447 [INFO] ----------------------< com.abhipsa.digital:law >-----------------------
+#14 3.447 [INFO] Building  0.0.1-SNAPSHOT
+#14 3.448 [INFO]   from pom.xml
+#14 3.448 [INFO] --------------------------------[ jar ]---------------------------------
+#14 4.337 [INFO] 
+#14 4.337 [INFO] --- clean:3.5.0:clean (default-clean) @ law ---
+#14 4.452 [INFO] 
+#14 4.452 [INFO] --- resources:3.5.0:resources (default-resources) @ law ---
+#14 4.596 [INFO] Copying 1 resource from src/main/resources to target/classes
+#14 4.621 [INFO] Copying 0 resource from src/main/resources to target/classes
+#14 4.623 [INFO] 
+#14 4.624 [INFO] --- compiler:3.15.0:compile (default-compile) @ law ---
+#14 4.847 [INFO] Recompiling the module because of changed source code.
+#14 4.864 [INFO] Compiling 68 source files with javac [debug parameters release 17] to target/classes
+#14 9.625 [INFO] Annotation processing is enabled because one or more processors were found
+#14 9.625   on the class path. A future release of javac may disable annotation processing
+#14 9.625   unless at least one processor is specified by name (-processor), or a search
+#14 9.625   path is specified (--processor-path, --processor-module-path), or annotation
+#14 9.625   processing is enabled explicitly (-proc:only, -proc:full).
+#14 9.625   Use -Xlint:-options to suppress this message.
+#14 9.625   Use -proc:none to disable annotation processing.
+#14 9.625 [INFO] /app/src/main/java/com/abhipsa/digital/law/config/AuditInterceptor.java: Some input files use or override a deprecated API.
+#14 9.625 [INFO] /app/src/main/java/com/abhipsa/digital/law/config/AuditInterceptor.java: Recompile with -Xlint:deprecation for details.
+#14 9.626 [INFO] 
+#14 9.627 [INFO] --- resources:3.5.0:testResources (default-testResources) @ law ---
+#14 9.636 [INFO] skip non existing resourceDirectory /app/src/test/resources
+#14 9.636 [INFO] 
+#14 9.636 [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ law ---
+#14 9.652 [INFO] Recompiling the module because of changed dependency.
+#14 9.654 [INFO] Compiling 1 source file with javac [debug parameters release 17] to target/test-classes
+#14 10.30 [INFO] Annotation processing is enabled because one or more processors were found
+#14 10.30   on the class path. A future release of javac may disable annotation processing
+#14 10.30   unless at least one processor is specified by name (-processor), or a search
+#14 10.30   path is specified (--processor-path, --processor-module-path), or annotation
+#14 10.30   processing is enabled explicitly (-proc:only, -proc:full).
+#14 10.30   Use -Xlint:-options to suppress this message.
+#14 10.30   Use -proc:none to disable annotation processing.
+#14 10.30 [INFO] 
+#14 10.30 [INFO] --- surefire:3.5.6:test (default-test) @ law ---
+#14 10.49 [INFO] Tests are skipped.
+#14 10.49 [INFO] 
+#14 10.49 [INFO] --- jar:3.5.0:jar (default-jar) @ law ---
+#14 11.02 [INFO] Building jar: /app/target/law-0.0.1-SNAPSHOT.jar
+#14 11.15 [INFO] 
+#14 11.15 [INFO] --- spring-boot:4.1.0:repackage (repackage) @ law ---
+#14 12.19 [INFO] Replacing main artifact /app/target/law-0.0.1-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+#14 12.19 [INFO] The original artifact has been renamed to /app/target/law-0.0.1-SNAPSHOT.jar.original
+#14 12.19 [INFO] ------------------------------------------------------------------------
+#14 12.19 [INFO] BUILD SUCCESS
+#14 12.19 [INFO] ------------------------------------------------------------------------
+#14 12.20 [INFO] Total time:  9.172 s
+#14 12.20 [INFO] Finished at: 2026-07-26T05:09:13Z
+#14 12.20 [INFO] ------------------------------------------------------------------------
+#14 DONE 12.3s
+
+#15 [runtime 2/4] WORKDIR /app
+#15 CACHED
+
+#16 [runtime 3/4] RUN addgroup --system spring && adduser --system --ingroup spring spring
+#16 CACHED
+
+#17 [runtime 4/4] COPY --from=build /app/target/*.jar app.jar
+#17 DONE 0.1s
+
+#18 exporting to image
+#18 exporting layers
+#18 exporting layers 3.0s done
+#18 exporting manifest sha256:82f6cfb79ca91b21dcdbb79b763179604369cc53aad5deb36757f9e70dfe9cf6 0.0s done
+#18 exporting config sha256:247e69eeabea916ed822a7909c37a02a09b1ee586f7ae3902fa8a82445bb8d71 0.0s done
+#18 exporting attestation manifest sha256:450ba2c4a0b448f177b68da85133add2059291e6537e7a1ae06b36f010148a0a 0.0s done
+#18 exporting manifest list sha256:97767461da324b582cc673d0cacc83c106e5e4f6dc0d90b8e87ca6d7506f4cbf 0.0s done
+#18 naming to docker.io/library/matterly-backend:build-20260726103857 done
+#18 unpacking to docker.io/library/matterly-backend:build-20260726103857
+#18 unpacking to docker.io/library/matterly-backend:build-20260726103857 0.5s done
+#18 naming to docker.io/library/matterly-backend:latest done
+#18 unpacking to docker.io/library/matterly-backend:latest 0.0s done
+#18 DONE 3.6s
+-- loading into minikube
+configmap/backend-config configured
+deployment.apps/backend unchanged
+service/backend unchanged
+-- pointing backend deployment at build-20260726103857
+deployment.apps/backend image updated
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+deployment "backend" successfully rolled out
+-- building frontend image (tag: build-20260726104039)
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 697B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:20-alpine
+#2 ...
+
+#3 [auth] library/nginx:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#4 [auth] library/node:pull token for registry-1.docker.io
+#4 DONE 0.0s
+
+#5 [internal] load metadata for docker.io/library/nginx:1.27-alpine
+#5 ...
+
+#2 [internal] load metadata for docker.io/library/node:20-alpine
+#2 DONE 1.8s
+
+#5 [internal] load metadata for docker.io/library/nginx:1.27-alpine
+#5 DONE 1.8s
+
+#6 [internal] load .dockerignore
+#6 transferring context: 72B done
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 transferring context: 19.70kB 0.0s done
+#7 DONE 0.0s
+
+#8 [runtime 1/3] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#8 resolve docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10 0.0s done
+#8 DONE 0.0s
+
+#9 [build 1/6] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+#9 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 0.0s done
+#9 DONE 0.1s
+
+#10 [build 3/6] COPY package.json package-lock.json ./
+#10 CACHED
+
+#11 [build 2/6] WORKDIR /app
+#11 CACHED
+
+#12 [build 4/6] RUN npm ci
+#12 CACHED
+
+#13 [build 5/6] COPY . .
+#13 DONE 0.1s
+
+#14 [build 6/6] RUN npm run build
+#14 0.711 
+#14 0.711 > lawyer-ui@0.0.0 build
+#14 0.711 > vite build
+#14 0.711 
+#14 1.151 vite v5.4.21 building for production...
+#14 1.252 transforming...
+#14 3.636 ✓ 131 modules transformed.
+#14 4.031 rendering chunks...
+#14 4.053 computing gzip size...
+#14 4.077 dist/index.html                              0.94 kB │ gzip:   0.46 kB
+#14 4.077 dist/assets/tabler-icons-DnZiL_sy.woff2    460.04 kB
+#14 4.078 dist/assets/tabler-icons-BWE4Tlyy.woff     790.63 kB
+#14 4.078 dist/assets/tabler-icons-DMRaotGC.ttf    2,824.36 kB
+#14 4.079 dist/assets/index-CqkCYTgv.css             204.08 kB │ gzip:  40.11 kB
+#14 4.079 dist/assets/index-C543OG5F.js              466.49 kB │ gzip: 114.63 kB
+#14 4.079 ✓ built in 2.88s
+#14 DONE 4.2s
+
+#8 [runtime 1/3] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#8 CACHED
+
+#15 [runtime 2/3] COPY --from=build /app/dist /usr/share/nginx/html
+#15 DONE 0.0s
+
+#16 [runtime 3/3] COPY nginx.conf /etc/nginx/conf.d/default.conf
+#16 DONE 0.0s
+
+#17 exporting to image
+#17 exporting layers
+#17 exporting layers 0.3s done
+#17 exporting manifest sha256:58c7926523d41cf94b68cbf66c67d2a9a6877a569bb40078b314e3862e355dda 0.0s done
+#17 exporting config sha256:6c30682322cfadc72b0ed9839e67a36604ce316e32f9296f2f5e796c6d01dc63 0.0s done
+#17 exporting attestation manifest sha256:ffdd5d04aeca41b21510fca60edde3e13409efb7476aa33ecf35f834ac85cbc2 0.0s done
+#17 exporting manifest list sha256:202e63869105c7e97166521b38b560d5ec96051caa93121c177111094ff9913b 0.0s done
+#17 naming to docker.io/library/matterly-frontend:build-20260726104039 done
+#17 unpacking to docker.io/library/matterly-frontend:build-20260726104039 0.1s done
+#17 naming to docker.io/library/matterly-frontend:latest done
+#17 unpacking to docker.io/library/matterly-frontend:latest 0.0s done
+#17 DONE 0.5s
+-- loading into minikube
+deployment.apps/frontend unchanged
+service/frontend unchanged
+-- pointing frontend deployment at build-20260726104039
+deployment.apps/frontend image updated
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+deployment "frontend" successfully rolled out
+===== deploy pipeline finished Sun Jul 26 10:41:19 IST 2026 — SUCCESS =====
+
+===== deploy pipeline started Sun Jul 26 11:23:57 IST 2026 — target=backend =====
+namespace/matterly unchanged
+persistentvolumeclaim/mysql-pvc unchanged
+deployment.apps/mysql unchanged
+service/mysql unchanged
+-- building backend image (tag: build-20260726112401)
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 794B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/eclipse-temurin:21-jdk
+#2 ...
+
+#3 [auth] library/eclipse-temurin:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#4 [internal] load metadata for docker.io/library/eclipse-temurin:21-jre
+#4 DONE 3.3s
+
+#2 [internal] load metadata for docker.io/library/eclipse-temurin:21-jdk
+#2 DONE 3.3s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 82B done
+#5 DONE 0.0s
+
+#6 [runtime 1/4] FROM docker.io/library/eclipse-temurin:21-jre@sha256:273396ed5998598ed1091e8d72711c2d36980a0e65103859c55a4e977a41ffd3
+#6 resolve docker.io/library/eclipse-temurin:21-jre@sha256:273396ed5998598ed1091e8d72711c2d36980a0e65103859c55a4e977a41ffd3 0.0s done
+#6 DONE 0.0s
+
+#7 [build 1/7] FROM docker.io/library/eclipse-temurin:21-jdk@sha256:da9d3a4f7650db39b918fc5a2c3da76556fb8cc8e5f3767cdea0bb409286951a
+#7 resolve docker.io/library/eclipse-temurin:21-jdk@sha256:da9d3a4f7650db39b918fc5a2c3da76556fb8cc8e5f3767cdea0bb409286951a 0.0s done
+#7 DONE 0.0s
+
+#8 [internal] load build context
+#8 transferring context: 15.50kB 0.0s done
+#8 DONE 0.0s
+
+#9 [build 4/7] COPY mvnw pom.xml ./
+#9 CACHED
+
+#10 [build 2/7] WORKDIR /app
+#10 CACHED
+
+#11 [build 3/7] COPY .mvn/ .mvn/
+#11 CACHED
+
+#12 [build 5/7] RUN chmod +x mvnw && ./mvnw -B dependency:go-offline
+#12 CACHED
+
+#13 [build 6/7] COPY src ./src
+#13 DONE 0.1s
+
+#14 [build 7/7] RUN ./mvnw -B clean package -DskipTests
+#14 5.070 [INFO] Scanning for projects...
+#14 6.100 [INFO] 
+#14 6.101 [INFO] ----------------------< com.abhipsa.digital:law >-----------------------
+#14 6.102 [INFO] Building  0.0.1-SNAPSHOT
+#14 6.105 [INFO]   from pom.xml
+#14 6.105 [INFO] --------------------------------[ jar ]---------------------------------
+#14 7.450 [INFO] 
+#14 7.452 [INFO] --- clean:3.5.0:clean (default-clean) @ law ---
+#14 7.601 [INFO] 
+#14 7.601 [INFO] --- resources:3.5.0:resources (default-resources) @ law ---
+#14 7.822 [INFO] Copying 1 resource from src/main/resources to target/classes
+#14 7.864 [INFO] Copying 0 resource from src/main/resources to target/classes
+#14 7.866 [INFO] 
+#14 7.866 [INFO] --- compiler:3.15.0:compile (default-compile) @ law ---
+#14 8.227 [INFO] Recompiling the module because of changed source code.
+#14 8.248 [INFO] Compiling 68 source files with javac [debug parameters release 17] to target/classes
+#14 14.28 [INFO] Annotation processing is enabled because one or more processors were found
+#14 14.28   on the class path. A future release of javac may disable annotation processing
+#14 14.28   unless at least one processor is specified by name (-processor), or a search
+#14 14.28   path is specified (--processor-path, --processor-module-path), or annotation
+#14 14.28   processing is enabled explicitly (-proc:only, -proc:full).
+#14 14.28   Use -Xlint:-options to suppress this message.
+#14 14.28   Use -p#2 ...
+
+#3 [auth] library/nginx:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#4 [auth] library/node:pull token for registry-1.docker.io
+#4 DONE 0.0s
+
+#5 [internal] load metadata for docker.io/library/node:20-alpine
+#5 ...
+
+#2 [internal] load metadata for docker.io/library/nginx:1.27-alpine
+#2 DONE 2.0s
+
+#5 [internal] load metadata for docker.io/library/node:20-alpine
+#5 DONE 2.0s
+
+#6 [internal] load .dockerignore
+#6 transferring context: 72B 0.0s done
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 transferring context: 42.38kB 0.0s done
+#7 DONE 0.0s
+
+#8 [runtime 1/3] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#8 resolve docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10 0.1s done
+#8 DONE 0.1s
+
+#9 [build 1/6] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+#9 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 0.1s done
+#9 DONE 0.1s
+
+#10 [build 2/6] WORKDIR /app
+#10 CACHED
+
+#11 [build 3/6] COPY package.json package-lock.json ./
+#11 CACHED
+
+#12 [build 4/6] RUN npm ci
+#12 CACHED
+
+#13 [build 5/6] COPY . .
+#13 DONE 0.1s
+
+#14 [build 6/6] RUN npm run build
+#14 0.973 
+#14 0.973 > lawyer-ui@0.0.0 build
+#14 0.973 > vite build
+#14 0.973 
+#14 1.749 vite v5.4.21 building for production...
+#14 1.877 transforming...
+#14 6.373 ✓ 131 modules transformed.
+#14 6.974 rendering chunks...
+#14 7.009 computing gzip size...
+#14 7.052 dist/index.html                              0.94 kB │ gzip:   0.46 kB
+#14 7.053 dist/assets/tabler-icons-DnZiL_sy.woff2    460.04 kB
+#14 7.053 dist/assets/tabler-icons-BWE4Tlyy.woff     790.63 kB
+#14 7.053 dist/assets/tabler-icons-DMRaotGC.ttf    2,824.36 kB
+#14 7.053 dist/assets/index-CqkCYTgv.css             204.08 kB │ gzip:  40.11 kB
+#14 7.053 dist/assets/index-BFuLot31.js              469.15 kB │ gzip: 115.12 kB
+#14 7.055 ✓ built in 5.22s
+#14 DONE 7.2s
+
+#8 [runtime 1/3] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#8 CACHED
+
+#15 [runtime 2/3] COPY --from=build /app/dist /usr/share/nginx/html
+#15 DONE 0.1s
+
+#16 [runtime 3/3] COPY nginx.conf /etc/nginx/conf.d/default.conf
+#16 DONE 0.1s
+
+#17 exporting to image
+#17 exporting layers
+#17 exporting layers 0.4s done
+#17 exporting manifest sha256:3e1f648695fcbf8990047ec6623e19a6412f929d01e8361154d57ef689e03bdf 0.0s done
+#17 exporting config sha256:cab7327a8a3eebb32fb3617#18 exporting layers 4.7s done
+#18 exporting manifest sha256:f463d0e3a71ef9b8089c480e4c4157e9a80cff6bae6f4755f7e42d7fd54ab75e 0.0s done
+#18 exporting config sha256:8ecce85a82290d9c31a45b8b4fd7c79256ccf9d724db79a44c1d8c82c3c85f19 0.0s done
+#18 exporting attestation manifest sha256:fbcf495624df3a87f53099f1331d4d0182254e27bb1948235bc9c33392e8eedd 0.0s done
+#18 exporting manifest list sha256:6048ad7f27f8530ec5df9c96ae9caa5229d523a597873461ab82f2895047d1cb
+#18 exporting manifest list sha256:6048ad7f27f8530ec5df9c96ae9caa5229d523a597873461ab82f2895047d1cb 0.1s done
+#18 naming to docker.io/library/matterly-backend:build-20260726112401 done
+#18 unpacking to docker.io/library/matterly-backend:build-20260726112401
+#18 unpacking to docker.io/library/matterly-backend:build-20260726112401 1.1s done
+#18 naming to docker.io/library/matterly-backend:latest done
+#18 unpacking to docker.io/library/matterly-backend:latest 0.0s done
+#18 DONE 6.2s
+-- loading into minikube
+deployment.apps/frontend configured
+service/frontend unchanged
+-- pointing frontend deployment at build-20260726112418
+deployment.apps/frontend image updated
+Waiting for deployment "frontend" rollout to finish: 0 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+configmap/backend-config unchanged
+deployment.apps/backend configured
+service/backend unchanged
+.
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+deployment "frontend" successfully rolled out
+nish: 0 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 0 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend" rollout to finish: 1 old replicas are pending termination...
+deployment "backend" successfully rolled out
+===== deploy pipeline finished Sun Jul 26 11:26:01 IST 2026 — SUCCESS =====
