@@ -32,6 +32,16 @@ spec:
                 secretKeyRef:
                   name: mysql-secret
                   key: root-password
+            - name: REGISTRY_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: root-password
+            - name: TENANT_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: root-password
             - name: JWT_SECRET
               valueFrom:
                 secretKeyRef:

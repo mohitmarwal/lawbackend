@@ -4,8 +4,21 @@ metadata:
   name: backend-config
   namespace: matterly
 data:
+  # Vestigial — the app's DataSource is now fully driven by the tenant-aware
+  # keys below (see TenantDataSourceConfig/RegistryDataSourceConfig); kept
+  # only because it's harmless and removing it isn't required for anything.
   SPRING_DATASOURCE_URL: "jdbc:mysql://mysql:3306/law_db?useSSL=false&allowPublicKeyRetrieval=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC"
   SPRING_DATASOURCE_USERNAME: "root"
+  # Multi-tenancy: same MySQL server/credentials as above, one schema per
+  # tenant (see provision-tenant.sh). "mysql" is the in-cluster Service name.
+  REGISTRY_DB_URL: "jdbc:mysql://mysql:3306/tenant_registry?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC"
+  REGISTRY_DB_USERNAME: "root"
+  TENANT_JDBC_URL_TEMPLATE: "jdbc:mysql://mysql:3306/{schema}?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC"
+  TENANT_DB_USERNAME: "root"
+  TENANT_DEFAULT_SCHEMA: "law_db"
+  # Every tenant is a subdomain of this (see TenantResolutionFilter). Change
+  # before pointing this at the real domain.
+  TENANT_BASE_DOMAIN: "matterly.in"
   # Comma-separated, no spaces needed either way. Covers local dev + a local
   # minikube port-forward. Before pointing this at a real cluster, add that
   # domain here too, e.g. "https://matterly.example.com" — no code change.

@@ -24,6 +24,8 @@ public interface CaseDetailsRepository extends JpaRepository<CaseDetails, String
 
     List<CaseDetails> findByPlaintiffClientIdOrDefendantClientId(String plaintiffClientId, String defendantClientId);
 
+    Page<CaseDetails> findByPlaintiffClientIdOrDefendantClientId(String plaintiffClientId, String defendantClientId, Pageable pageable);
+
     List<CaseDetails> findByPlaintiffClient_NameContainingIgnoreCase(String plaintiff);
 
     List<CaseDetails> findByDefendantClient_NameContainingIgnoreCase(String defendant);

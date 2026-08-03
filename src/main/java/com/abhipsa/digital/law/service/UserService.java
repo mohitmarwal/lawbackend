@@ -1,6 +1,8 @@
 package com.abhipsa.digital.law.service;
 
+import com.abhipsa.digital.law.entity.Client;
 import com.abhipsa.digital.law.entity.User;
+import com.abhipsa.digital.law.repository.ClientRepository;
 import com.abhipsa.digital.law.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -14,6 +16,7 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository repository;
+    private final ClientRepository clientRepository;
     private final CurrentUserService currentUserService;
 
     public User create(User user) {
@@ -21,6 +24,15 @@ public class UserService {
             // Senior associates may only ever create associate accounts,
             // regardless of what role the request body asked for.
             user.setRole("associate");
+        }
+        if (user.getRole() != null && user.getRole().equalsIgnoreCase("client")) {
+            String clientId = user.getClient() != null ? user.getClient().getId() : null;
+            if (clientId == null || clientId.isBlank()) {
+                throw new IllegalArgumentException("A client account must be linked to a client");
+            }
+            Client client = clientRepository.findById(clientId)
+                    .orElseThrow(() -> new RuntimeException("Client not found"));
+            user.setClient(client);
         }
         return repository.save(user);
     }

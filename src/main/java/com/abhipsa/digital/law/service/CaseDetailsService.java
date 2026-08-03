@@ -52,6 +52,13 @@ public class CaseDetailsService {
 
     private void assertOwnership(CaseDetails caseDetails) {
         if (currentUserService.isAdmin()) return;
+        if (currentUserService.isClient()) {
+            String clientId = currentUserService.getClientId();
+            String plaintiffId = caseDetails.getPlaintiffClient() != null ? caseDetails.getPlaintiffClient().getId() : null;
+            String defendantId = caseDetails.getDefendantClient() != null ? caseDetails.getDefendantClient().getId() : null;
+            if (clientId != null && (clientId.equals(plaintiffId) || clientId.equals(defendantId))) return;
+            throw new AccessDeniedException("This case is not linked to your account");
+        }
         String myId = currentUserService.getUserId();
         String assignedId = caseDetails.getAssignedUser() != null ? caseDetails.getAssignedUser().getId() : null;
         if (myId == null || !myId.equals(assignedId)) {
@@ -90,6 +97,9 @@ public class CaseDetailsService {
 
     @Transactional
     public CaseDetails create(CaseDetails caseDetails) {
+        if (currentUserService.isClient()) {
+            throw new AccessDeniedException("Clients cannot create cases");
+        }
         if (!currentUserService.isAdmin()) {
             // Non-admins can only ever create a case assigned to themselves,
             // regardless of what the "Assigned Associate" field said.
@@ -172,6 +182,12 @@ public class CaseDetailsService {
     }
 
     public List<CaseDetails> getAll() {
+        if (currentUserService.isClient()) {
+            String clientId = currentUserService.getClientId();
+            List<CaseDetails> clientCases = repository.findByPlaintiffClientIdOrDefendantClientId(clientId, clientId);
+            enrichPreviousDates(clientCases);
+            return clientCases;
+        }
         String myId = scopeUserId();
         List<CaseDetails> all = myId == null ? repository.findAll() : repository.findByAssignedUserId(myId);
         enrichPreviousDates(all);
@@ -186,6 +202,9 @@ public class CaseDetailsService {
     }
 
     public CaseDetails update(String id, CaseDetails caseDetails) {
+        if (currentUserService.isClient()) {
+            throw new AccessDeniedException("Clients cannot edit case details");
+        }
 
         CaseDetails existing = getById(id);
 
@@ -241,6 +260,9 @@ public class CaseDetailsService {
     }
 
     public void delete(String id) {
+        if (currentUserService.isClient()) {
+            throw new AccessDeniedException("Clients cannot delete cases");
+        }
         repository.deleteById(id);
     }
 
@@ -332,6 +354,12 @@ public class CaseDetailsService {
     // ==================================================================
 
     public Page<CaseDetails> getAllPaged(Pageable pageable) {
+        if (currentUserService.isClient()) {
+            String clientId = currentUserService.getClientId();
+            Page<CaseDetails> clientPage = repository.findByPlaintiffClientIdOrDefendantClientId(clientId, clientId, pageable);
+            enrichPreviousDates(clientPage.getContent());
+            return clientPage;
+        }
         String myId = scopeUserId();
         Page<CaseDetails> page = myId == null ? repository.findAll(pageable) : repository.findByAssignedUserId(myId, pageable);
         enrichPreviousDates(page.getContent());

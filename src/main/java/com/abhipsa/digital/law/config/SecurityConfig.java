@@ -1,7 +1,6 @@
 package com.abhipsa.digital.law.config;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -14,7 +13,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -22,12 +20,7 @@ import java.util.List;
 public class SecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
-
-    // Comma-separated list, set via CORS_ALLOWED_ORIGINS. Covers local dev
-    // (Vite) and a local minikube port-forward by default; add the real
-    // cluster's domain here (env var, no code change) before that deployment.
-    @Value("${cors.allowed-origins:http://localhost:5173,http://localhost:8081}")
-    private String allowedOriginsProperty;
+    private final TenantResolutionFilter tenantResolutionFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -40,6 +33,10 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**").permitAll()
                         // Kubernetes/Docker liveness & readiness probes.
                         .requestMatchers("/actuator/health/**").permitAll()
+                        // Tenant branding (firm name/logo) for the pre-login
+                        // landing/login pages - resolved from the Host header
+                        // by TenantResolutionFilter, no auth required.
+                        .requestMatchers("/api/public/**").permitAll()
                         // Finance and the Admin-only tools (Checker approval,
                         // Mobile Contacts). Associates/senior associates only
                         // get "main work" + change password, per FR request.
@@ -48,6 +45,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/cases/checker/**").hasRole("ADMIN")
                         // Audit trail — who changed what, admin-only.
                         .requestMatchers("/api/audit/**").hasRole("ADMIN")
+                        // Anyone logged in can view branding (sidebar needs
+                        // it); only admins can change it.
+                        .requestMatchers(HttpMethod.PUT, "/api/branding").hasRole("ADMIN")
                         // Admin or senior associate can create new personnel
                         // accounts (senior associate's role is then forced
                         // server-side to "associate" — see UserService.create()).
@@ -69,37 +69,44 @@ public class SecurityConfig {
                             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                             response.getWriter().write("{\"error\":\"You do not have permission to access this.\"}");
                         }))
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                // Must resolve which tenant schema a request belongs to
+                // before JwtAuthFilter runs - it looks the user up by email,
+                // and that lookup has to hit the right tenant's users table.
+                .addFilterBefore(tenantResolutionFilter, JwtAuthFilter.class);
 
         return http.build();
     }
 
 
-    // 2. Define the exact CORS policy rule settings
+    // CORS: allow any origin, reflected dynamically per-request rather than
+    // matched against a fixed allowlist. This app authenticates with a
+    // bearer JWT attached manually by JS (see axios.jsx) - never a cookie -
+    // so there's no ambient-credential/session-riding risk an origin
+    // allowlist would normally exist to prevent; the token itself is the
+    // real security boundary, checked per-request by JwtAuthFilter.
+    //
+    // An allowlist here was a maintenance trap in practice: every new way of
+    // reaching the app - a minikube port-forward on a random local port, a
+    // NodePort, a real domain, a new tenant subdomain - needed its origin
+    // added in advance or every request failed closed with a genuine 403
+    // from Spring Security's own CorsFilter (confirmed: it rejects actual
+    // requests outright when the Origin header doesn't match, not just
+    // preflight - this isn't only a "browser blocks reading the response"
+    // situation). setAllowedOriginPatterns(List.of("*")) is the one setting
+    // that stays valid with allowCredentials(true) (unlike a literal
+    // Access-Control-Allow-Origin: *) precisely so this doesn't need
+    // revisiting for every future deployment target.
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-
-        // Origin allowlist comes from CORS_ALLOWED_ORIGINS (see field above) —
-        // works the same in local dev, a minikube port-forward, Docker
-        // Compose, or a real cluster; only the env var changes, never this code.
-        List<String> allowedOrigins = Arrays.stream(allowedOriginsProperty.split(","))
-                .map(String::trim)
-                .filter(s -> !s.isEmpty())
-                .toList();
-        configuration.setAllowedOriginPatterns(allowedOrigins);
-
-        // Allow typical standard REST Methods
+        configuration.setAllowedOriginPatterns(List.of("*"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-
-        // Allow all headers (Authorization, Content-Type, etc.)
         configuration.setAllowedHeaders(List.of("*"));
-
-        // Allow cookies/auth tokens to slide across origins safely if needed
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration); // Apply globally to all backend endpoints
+        source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 }

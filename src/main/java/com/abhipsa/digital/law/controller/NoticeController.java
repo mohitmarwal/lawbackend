@@ -1,7 +1,9 @@
 package com.abhipsa.digital.law.controller;
 
+import com.abhipsa.digital.law.entity.Document;
 import com.abhipsa.digital.law.entity.Notice;
 import com.abhipsa.digital.law.entity.User;
+import com.abhipsa.digital.law.service.DocumentService;
 import com.abhipsa.digital.law.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,6 +26,7 @@ import java.util.List;
 public class NoticeController {
 
     private final NoticeService service;
+    private final DocumentService documentService;
 
     @PostMapping
     public Notice create(@RequestBody Notice notice) {
@@ -78,14 +81,10 @@ public class NoticeController {
 
     @GetMapping("/{id}/document")
     public ResponseEntity<byte[]> downloadDocument(@PathVariable String id) {
-        Notice notice = service.getById(id);
-        MediaType type = notice.getDocumentContentType() != null
-                ? MediaType.parseMediaType(notice.getDocumentContentType())
-                : MediaType.APPLICATION_OCTET_STREAM;
-        return ResponseEntity.ok()
-                .contentType(type)
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + notice.getDocumentName() + "\"")
-                .body(notice.getDocumentData());
+        service.getById(id); // ownership check
+        Document document = documentService.findForNoticeSlot(id, "document")
+                .orElseThrow(() -> new RuntimeException("Document not found"));
+        return toResponse(document);
     }
 
     @PostMapping("/{id}/receipt")
@@ -95,14 +94,20 @@ public class NoticeController {
 
     @GetMapping("/{id}/receipt")
     public ResponseEntity<byte[]> downloadReceipt(@PathVariable String id) {
-        Notice notice = service.getById(id);
-        MediaType type = notice.getReceiptContentType() != null
-                ? MediaType.parseMediaType(notice.getReceiptContentType())
+        service.getById(id); // ownership check
+        Document document = documentService.findForNoticeSlot(id, "receipt")
+                .orElseThrow(() -> new RuntimeException("Document not found"));
+        return toResponse(document);
+    }
+
+    private ResponseEntity<byte[]> toResponse(Document document) {
+        MediaType type = document.getContentType() != null
+                ? MediaType.parseMediaType(document.getContentType())
                 : MediaType.APPLICATION_OCTET_STREAM;
         return ResponseEntity.ok()
                 .contentType(type)
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + notice.getReceiptName() + "\"")
-                .body(notice.getReceiptData());
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + document.getFileName() + "\"")
+                .body(document.getData());
     }
 
     @GetMapping("/reference/{referenceNo}")

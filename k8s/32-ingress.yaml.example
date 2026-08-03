@@ -4,8 +4,16 @@
 #
 # If you use this: rename to 32-ingress.yaml, set frontend's Service type
 # back to ClusterIP in 31-frontend-service.yaml, replace matterly.example.com
-# below, and confirm your cluster actually has an ingress controller
+# below (must match app.tenant.base-domain / TENANT_BASE_DOMAIN on the
+# backend), and confirm your cluster actually has an ingress controller
 # installed (this manifest alone does nothing without one).
+#
+# Wildcard host: every tenant is a subdomain of the same base domain (see
+# TenantResolutionFilter) and shares these same two Deployments - a new
+# tenant needs a DNS record pointing its subdomain here, not a new Ingress
+# rule or a change to this file. nginx-ingress supports wildcard hosts
+# natively; if your controller doesn't, list each tenant subdomain as its
+# own additional `host` entry under the same single `backend` instead.
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -16,6 +24,18 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
+    - host: "*.matterly.example.com"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 80
+    # The bare base domain itself resolves to the "default" tenant (see
+    # TenantResolutionFilter) - the pre-existing law_db data.
     - host: matterly.example.com
       http:
         paths:

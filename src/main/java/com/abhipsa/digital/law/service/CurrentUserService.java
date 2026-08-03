@@ -37,4 +37,17 @@ public class CurrentUserService {
         User user = getUser();
         return user != null ? user.getId() : null;
     }
+
+    // A client only ever sees the case(s) where their linked Client party
+    // is plaintiff or defendant (see CaseDetailsService) - never assigned-
+    // user-based like associate/senior_associate.
+    public boolean isClient() {
+        User user = getUser();
+        return user != null && user.getRole() != null && user.getRole().equalsIgnoreCase("client");
+    }
+
+    public String getClientId() {
+        User user = getUser();
+        return user != null && user.getClient() != null ? user.getClient().getId() : null;
+    }
 }

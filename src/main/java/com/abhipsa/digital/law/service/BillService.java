@@ -20,7 +20,20 @@ public class BillService {
     private final BillLineItemRepository lineItemRepository;
 
     public Bill create(Bill bill) {
+        bill.setBillNo(generateBillNo());
         return repository.save(bill);
+    }
+
+    // Sequential, zero-padded to 6 digits (000001-999999), regardless of
+    // what the caller submitted - bill numbers are always system-generated.
+    private String generateBillNo() {
+        long seq = (repository.count() + 1) % 1_000_000;
+        String candidate = String.format("%06d", seq);
+        while (repository.existsByBillNo(candidate)) {
+            seq = (seq + 1) % 1_000_000;
+            candidate = String.format("%06d", seq);
+        }
+        return candidate;
     }
 
     public List<Bill> getAll() {
